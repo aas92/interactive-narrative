@@ -421,18 +421,13 @@
         function leafTick() {
             var lt = window.__leafTargets;
             var fresh = lt && (( (window.performance?performance.now():Date.now()) - (lt.stamp||0)) < 250);
-            var live = fresh && lt.active && lt.bars && lt.bars.length;
             // spawn while the chart is active & on-screen
-            if (live) {
+            if (fresh && lt.active && lt.bars && lt.bars.length) {
                 var rate = lt.filling ? 3 : 1;          // brisk during fill, trickle when full
                 var cap = lt.filling ? 120 : 40;
                 if (leaves.length < cap && (lt.filling || (Math.random() < 0.4))) {
                     for (var s = 0; s < rate; s++) spawnLeaf(lt.bars);
                 }
-            } else if (leaves.length) {
-                // user scrolled away from the bar section: stop spawning and clear
-                // the leaves quickly so they don't linger over other sections
-                leaves.length = 0;
             }
             for (var i = leaves.length - 1; i >= 0; i--) {
                 var lf = leaves[i];

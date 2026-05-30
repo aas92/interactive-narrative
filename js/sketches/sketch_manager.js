@@ -72,12 +72,11 @@ function startP5() {
             };
 
             p.draw = function () {
-                var overlay = !!(document.querySelector('#graphic.layout-tree-overlay'));
-                if (overlay) {
-                    p.clear();                 // transparent: page shows through edges/header
-                } else {
-                    p.background(255);
-                }
+                // Always clear to transparent so the warm-paper page background
+                // shows through the chart canvas — this keeps the #vis chart canvas
+                // and the full-page #motes/leaf canvas on the SAME background, with
+                // no white seam around the charts.
+                p.clear();
                 self.draw(p);
 
                 // scroll in/out transition using progress
