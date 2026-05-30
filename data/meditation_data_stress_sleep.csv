@@ -1,0 +1,375 @@
+disorder,duration,quality,stress
+None,6.1,6,6
+None,6.2,6,8
+None,6.2,6,8
+Sleep Apnea,5.9,4,8
+Sleep Apnea,5.9,4,8
+Insomnia,5.9,4,8
+Insomnia,6.3,6,7
+None,7.8,7,6
+None,7.8,7,6
+None,7.8,7,6
+None,6.1,6,8
+None,7.8,7,6
+None,6.1,6,8
+None,6.0,6,8
+None,6.0,6,8
+None,6.0,6,8
+Sleep Apnea,6.5,5,7
+Sleep Apnea,6.0,6,8
+Insomnia,6.5,5,7
+None,7.6,7,6
+None,7.7,7,6
+None,7.7,7,6
+None,7.7,7,6
+None,7.7,7,6
+None,7.8,7,6
+None,7.9,7,6
+None,7.8,7,6
+None,7.9,7,6
+None,7.9,7,6
+None,7.9,7,6
+Sleep Apnea,6.4,5,7
+Insomnia,6.4,5,7
+None,7.9,8,4
+None,6.1,6,8
+None,7.7,7,6
+None,6.1,6,8
+None,6.1,6,8
+None,7.6,7,6
+None,7.6,7,6
+None,7.6,7,6
+None,7.7,7,6
+None,7.7,7,6
+None,7.7,7,6
+None,7.8,7,6
+None,7.7,7,6
+None,7.8,7,6
+None,7.7,7,6
+None,7.8,7,6
+None,7.7,7,6
+Sleep Apnea,7.7,7,6
+None,7.5,8,3
+None,7.5,8,3
+None,6.0,6,8
+None,7.6,7,6
+None,6.0,6,8
+None,6.0,6,8
+None,7.7,7,6
+None,6.0,6,8
+None,6.0,6,8
+None,7.7,7,6
+None,6.0,6,8
+None,6.0,6,8
+None,6.2,6,8
+None,6.2,6,8
+None,6.2,6,8
+None,6.2,6,8
+None,7.2,8,6
+Insomnia,6.0,6,8
+None,6.2,6,6
+None,6.2,6,6
+None,6.1,6,8
+None,6.1,6,8
+None,6.1,6,8
+None,6.1,6,8
+None,6.0,6,8
+None,6.0,6,8
+None,6.0,6,8
+None,6.0,6,8
+None,6.0,6,8
+None,6.0,6,8
+Sleep Apnea,5.8,4,8
+Sleep Apnea,5.8,4,8
+None,6.7,7,5
+None,6.7,7,5
+None,7.5,8,5
+None,7.2,8,4
+None,7.2,8,4
+None,7.2,8,4
+None,7.3,8,4
+None,7.3,8,4
+None,7.3,8,4
+None,7.3,8,4
+None,7.5,8,5
+Sleep Apnea,7.4,7,5
+Insomnia,7.2,8,4
+None,7.1,8,4
+None,7.2,8,4
+None,7.1,8,4
+None,7.1,8,4
+None,7.1,8,4
+None,7.2,8,4
+None,7.2,8,4
+None,7.2,8,4
+Sleep Apnea,6.6,5,7
+Sleep Apnea,7.2,8,4
+Insomnia,6.6,5,7
+None,6.1,6,6
+None,7.8,8,4
+None,7.8,8,4
+None,7.4,8,5
+None,7.2,8,4
+None,7.4,8,5
+None,7.2,8,4
+None,7.4,8,5
+None,7.2,8,4
+None,7.2,8,4
+None,7.2,8,4
+None,7.2,8,4
+None,7.2,8,4
+None,7.2,8,4
+None,7.2,8,4
+None,7.2,8,4
+None,7.2,8,4
+None,7.2,8,4
+None,7.2,8,4
+None,7.5,8,4
+None,7.3,8,5
+None,7.1,8,4
+None,7.3,8,5
+None,7.3,8,5
+None,7.1,8,4
+None,7.3,8,5
+None,7.3,8,5
+None,7.1,8,4
+None,7.3,8,5
+None,7.3,8,5
+None,7.1,8,4
+None,7.1,8,5
+None,7.1,8,4
+None,7.1,8,5
+None,7.1,8,4
+None,7.1,8,5
+None,7.1,8,4
+None,7.1,8,4
+Sleep Apnea,7.1,8,5
+Sleep Apnea,7.4,7,5
+Insomnia,7.2,8,5
+Insomnia,6.5,5,7
+None,6.9,7,6
+None,8.0,9,3
+None,8.0,9,3
+None,7.2,8,5
+None,7.2,8,5
+None,7.2,8,5
+None,7.2,8,5
+None,7.2,8,5
+None,7.2,8,5
+None,7.2,8,5
+None,7.2,8,5
+None,7.2,8,5
+None,7.2,8,5
+None,7.2,8,6
+None,7.2,8,6
+None,7.9,8,5
+None,7.9,8,5
+Insomnia,7.6,8,5
+None,7.3,8,6
+None,7.1,7,6
+None,7.1,7,6
+None,7.7,8,5
+None,7.7,8,5
+None,7.7,8,5
+None,7.7,8,5
+None,7.7,8,5
+None,7.6,8,5
+None,7.6,8,5
+None,7.6,8,5
+Insomnia,6.5,6,7
+None,7.8,8,5
+None,7.8,8,5
+None,7.8,8,5
+None,7.8,8,5
+None,7.8,8,5
+None,7.8,8,5
+Sleep Apnea,6.8,6,7
+Sleep Apnea,6.8,6,7
+Insomnia,6.7,7,4
+Insomnia,6.3,6,7
+Insomnia,6.7,7,4
+Insomnia,6.5,6,7
+Insomnia,6.7,7,4
+Insomnia,6.4,6,7
+Insomnia,6.5,6,7
+Insomnia,6.5,6,7
+Insomnia,6.5,6,7
+Insomnia,6.5,6,7
+Insomnia,6.5,6,7
+Insomnia,6.5,6,7
+Insomnia,6.5,6,7
+Insomnia,6.5,6,7
+Insomnia,6.5,6,7
+Insomnia,7.8,8,5
+Insomnia,7.8,8,5
+None,6.9,6,7
+None,7.6,8,4
+None,7.7,8,5
+None,7.7,8,5
+None,7.7,8,5
+None,7.7,8,5
+None,7.8,8,5
+None,7.7,8,5
+None,7.8,8,5
+None,7.8,8,5
+None,7.8,8,5
+None,7.8,8,5
+None,7.8,8,5
+None,7.8,8,5
+None,7.8,8,5
+Sleep Apnea,7.8,8,5
+Sleep Apnea,6.5,6,7
+Insomnia,6.6,7,4
+Insomnia,6.4,6,7
+Insomnia,6.3,6,7
+Insomnia,6.4,6,7
+Insomnia,6.6,7,4
+Insomnia,6.3,6,7
+Insomnia,6.6,7,4
+Insomnia,6.3,6,7
+Insomnia,6.6,7,4
+Insomnia,6.3,6,7
+Insomnia,6.6,7,4
+Insomnia,6.3,6,7
+Insomnia,6.6,7,4
+Insomnia,6.3,6,7
+Insomnia,6.6,7,4
+Insomnia,6.3,6,7
+Insomnia,6.4,6,7
+Insomnia,6.5,7,4
+Insomnia,6.3,6,7
+Insomnia,6.4,6,7
+Insomnia,6.5,7,4
+Insomnia,6.3,6,7
+Insomnia,6.4,6,7
+Insomnia,6.5,7,4
+Insomnia,6.3,6,7
+Insomnia,6.5,7,4
+Insomnia,6.3,6,7
+Insomnia,6.8,7,7
+None,6.4,6,7
+None,6.5,6,7
+Insomnia,6.8,7,6
+Insomnia,6.8,7,6
+Insomnia,6.5,7,4
+Insomnia,6.5,7,4
+Insomnia,6.5,7,4
+Insomnia,6.5,7,4
+Insomnia,6.6,7,4
+Insomnia,6.6,7,4
+Insomnia,6.6,7,4
+Insomnia,6.6,7,4
+Insomnia,6.6,7,4
+None,6.6,7,4
+None,6.6,7,4
+None,6.9,7,5
+Insomnia,7.3,7,5
+Sleep Apnea,5.9,6,8
+Insomnia,7.3,7,5
+None,6.2,6,8
+Sleep Apnea,6.0,6,8
+Sleep Apnea,6.1,6,8
+Sleep Apnea,6.1,6,8
+Sleep Apnea,6.1,6,8
+Sleep Apnea,6.1,6,8
+Sleep Apnea,6.2,6,8
+Sleep Apnea,6.2,6,8
+Sleep Apnea,6.2,6,8
+Sleep Apnea,8.1,9,3
+Sleep Apnea,8.1,9,3
+Insomnia,6.1,6,8
+None,8.3,9,3
+None,6.0,6,8
+Sleep Apnea,6.1,6,8
+Sleep Apnea,6.0,6,8
+Sleep Apnea,6.0,6,8
+Sleep Apnea,6.0,6,8
+Sleep Apnea,6.0,6,8
+Sleep Apnea,6.0,6,8
+Sleep Apnea,6.0,6,8
+Sleep Apnea,6.0,6,8
+Sleep Apnea,6.1,6,8
+Sleep Apnea,6.0,6,8
+Sleep Apnea,6.1,6,8
+Sleep Apnea,6.1,6,8
+Sleep Apnea,6.0,6,8
+Sleep Apnea,6.1,6,8
+Sleep Apnea,6.0,6,8
+Sleep Apnea,6.1,6,8
+Sleep Apnea,6.1,6,8
+None,8.5,9,3
+None,8.5,9,3
+None,8.5,9,3
+None,8.5,9,3
+None,7.1,7,6
+Sleep Apnea,6.0,6,8
+Sleep Apnea,6.1,6,8
+Sleep Apnea,6.1,6,8
+Insomnia,6.5,7,7
+Insomnia,6.5,7,7
+Insomnia,6.6,7,7
+Insomnia,6.6,7,7
+Insomnia,6.6,7,7
+Insomnia,6.6,7,7
+None,8.4,9,3
+None,8.4,9,3
+None,8.4,9,3
+Insomnia,8.3,9,3
+None,8.5,9,3
+None,8.5,9,3
+None,8.4,9,3
+None,8.4,9,3
+None,8.5,9,3
+None,8.4,9,3
+None,8.4,9,3
+None,8.5,9,3
+None,8.3,9,3
+None,8.5,9,3
+None,8.3,9,3
+None,8.5,9,3
+None,8.3,9,3
+None,8.5,9,3
+None,8.5,9,3
+None,8.4,9,3
+None,8.4,9,3
+None,8.4,9,3
+None,8.4,9,3
+None,8.4,9,3
+None,8.4,9,3
+None,8.4,9,3
+None,8.5,9,3
+Sleep Apnea,8.1,9,4
+Sleep Apnea,8.1,9,4
+None,8.2,9,3
+None,8.2,9,3
+None,8.1,9,3
+Sleep Apnea,8.2,9,3
+Sleep Apnea,8.2,9,3
+Sleep Apnea,8.2,9,3
+Sleep Apnea,8.2,9,3
+Sleep Apnea,8.2,9,3
+Sleep Apnea,8.1,9,3
+Sleep Apnea,8.1,9,3
+Sleep Apnea,8.1,9,3
+Sleep Apnea,8.0,9,3
+Sleep Apnea,8.0,9,3
+Sleep Apnea,8.0,9,3
+Sleep Apnea,8.0,9,3
+Sleep Apnea,8.0,9,3
+Sleep Apnea,8.0,9,3
+None,8.0,9,3
+None,8.1,9,3
+Sleep Apnea,8.2,9,3
+Sleep Apnea,8.2,9,3
+Sleep Apnea,8.2,9,3
+Sleep Apnea,8.2,9,3
+Sleep Apnea,8.0,9,3
+Sleep Apnea,8.0,9,3
+Sleep Apnea,8.1,9,3
+Sleep Apnea,8.0,9,3
+Sleep Apnea,8.1,9,3
+Sleep Apnea,8.1,9,3
+Sleep Apnea,8.0,9,3
+Sleep Apnea,8.1,9,3
+Sleep Apnea,8.1,9,3
+Sleep Apnea,8.1,9,3
