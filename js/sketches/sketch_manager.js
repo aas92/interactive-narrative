@@ -17,6 +17,12 @@ function startP5() {
         } else {
             margin = { top: 0, left: 80, bottom: 4, right: 10 };
             var isFullViz = !!(document.querySelector('#graphic.layout-full-viz'));
+            var isTreeOverlay = !!(document.querySelector('#graphic.layout-tree-overlay'));
+            if (isTreeOverlay) {
+                // full-viewport tree: trunk runs off-screen top & bottom
+                margin = { top: 0, left: 0, bottom: 0, right: 0 };
+                return { width: Math.round(window.innerWidth), height: Math.round(window.innerHeight), margin: margin };
+            }
             var rawW = isFullViz
                 ? Math.round(window.innerWidth) - 40
                 : Math.round(window.innerWidth * 0.70) - 60;
@@ -66,7 +72,12 @@ function startP5() {
             };
 
             p.draw = function () {
-                p.background(255);
+                var overlay = !!(document.querySelector('#graphic.layout-tree-overlay'));
+                if (overlay) {
+                    p.clear();                 // transparent: page shows through edges/header
+                } else {
+                    p.background(255);
+                }
                 self.draw(p);
 
                 // scroll in/out transition using progress
