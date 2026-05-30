@@ -59,16 +59,15 @@
         var fillT = Math.max(0, Math.min(1, rawT));
         var rev = fillT * fillT * (3 - 2 * fillT);      // smoothstep ease
 
-        p.textSize(T.annotation + 4);     // larger, more legible bar labels
+        p.textSize(T.annotation);
         for (var i = 0; i < d.length; i++) {
             var r = d[i], y = f.y + i * rowH + (rowH - barH) / 2;
             var wFull = (r.total / maxV) * trackW;     // full bar width for this row
             var w = wFull * rev;                        // self-fill driven width
 
-            // unfilled bar track painted in the PAGE paper tone (not white), so
-            // the empty portion blends into the page background
+            // faint bar track so the target is legible before leaves fill it
             p.noStroke();
-            p.fill(241, 236, 224);                      // matches --paper-bottom (#F1ECE0)
+            p.fill(col[0], col[1], col[2], 30);
             p.rect(x0, y, wFull, barH, 2);
 
             // the leaf-filled bar: solid fall-tone fill (the visual "level") plus
@@ -77,14 +76,14 @@
             p.rect(x0, y, w, barH, 2);
             leafFill_settledTexture(p, sys, i, x0, y, w, barH);
 
-            // labels (bigger fonts)
+            // labels (unchanged)
             p.fill(C.PALETTE.ink);
             p.textAlign(p.RIGHT, p.CENTER);
-            p.textSize(T.annotation + 4);
+            p.textSize(T.annotation);
             p.text(r.condition, f.x + 78, y + barH / 2);
-            p.fill(90);
+            p.fill(110);
             p.textAlign(p.LEFT, p.CENTER);
-            p.textSize(T.valueLabel + 4);
+            p.textSize(T.valueLabel);
             p.text(r.total, f.x + 88 + w, y + barH / 2);
         }
 
