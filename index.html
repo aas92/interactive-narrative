@@ -187,14 +187,14 @@
     <!-- OPENING TITLE CARD: full-screen hero; fades out as the user scrolls into the tree -->
     <div id="hero">
         <div id="hero-inner">
-            <h1 id="hero-title">Is mindfulness an effective treatment toward a healthier lifestyle?</h1>
+            <h1 id="hero-title">How Does Mindfulness Make us Healthy?</h1>
             <div id="hero-authors">Franck Kepnang &amp; Aaron Stern</div>
             <div id="hero-scroll">scroll to begin</div>
         </div>
     </div>
 
     <header id="site-header">
-        <span id="site-title">Is mindfulness an effective treatment?</span>
+        <span id="site-title">How Does Mindfulness Make us Healthy?</span>
         <span id="site-course">IMT 561 Data Visualization: Design and Development</span>
         <span id="debug-state"></span>
     </header>
@@ -208,55 +208,40 @@
                 <!-- 0 — Tree intro: religious / pre-scientific forms (tree on right, copy left) -->
                 <section class="step" data-active-index="0" data-layout="tree-overlay">
                     <div class="tree-panel">
-                    <div class="title">Meditation is older than medicine</div>
-                    Long before it entered the clinic, meditation was a devotional discipline. The word itself
-                    descends from the Latin <i>meditārī</i> — "to think over, to reflect upon"<sup><a class="cite"
-                    href="#sources">1</a></sup>. Across cultures, distinct contemplative forms took root:
+                    <div class="title">Meditation as a spiritual practice.</div>
+                    Across cultures, each religion has distinct contemplative practices:
                     <b>Dhikr</b> in Islam, <b>Lectio Divina</b> in Christianity, <b>Hitbodedut</b> in Judaism,
                     <b>Vipassanā</b> in the Pāli Buddhist tradition<sup><a class="cite" href="#sources">2</a></sup>,
                     <b>Prāṇāyāma</b> in Hinduism, and <b>Neidan</b> in Daoism.
                     <br /><br />
-                    These practices share a single root — the deliberate turning of attention inward — but their
-                    purpose was spiritual, not therapeutic. None were designed to be measured. Scroll to grow the
-                    tree from these roots, then climb toward its modern crown.
+                    Meditation practices are diverse and widespread but there is a common root: quieting the mind and focusing attention. 
+                    It wasn't until meditative practices spread throughout North America in the 20th century that Western Medicine became 
+                    interested in studying its potential palliative benefits.
                     </div>
                 </section>
 
                 <!-- 1 — Tree intro: science-based crown (red circle highlights the top) -->
                 <section class="step" data-active-index="1" data-layout="tree-overlay">
                     <div class="tree-panel">
-                    <div class="title">Then science began to ask</div>
-                    Beginning in the late twentieth century, clinicians took the oldest of these techniques and
-                    subjected it to measurement. <b>Mindfulness</b> — adapted from the Theravāda Buddhist tradition
-                    and standardized as Mindfulness-Based Stress Reduction (MBSR) and Mindfulness-Based Cognitive
-                    Therapy (MBCT) at the UMass Center for Mindfulness — became the most-studied form<sup><a
-                    class="cite" href="#sources">3</a></sup>. Its core instruction is deceptively simple: observe
-                    your thoughts without attaching judgment.
-                    <br /><br />
-                    At the crown of the tree, circled in red, the question itself changes. No longer <i>is this
-                    sacred?</i> but <i>does it work, and how would we know?</i>
-                    <br /><br />
-                    To find out, we looked at the evidence three ways: 2,411 clinical trials, physiological heart
-                    rate data recorded during meditation sessions, and health surveys from 374 participants.
-                    <br /><br />
-                    <a class="sources-link" href="#sources">View all sources →</a>
+                    <div class="title">Meditation as an object of study.</div>
+                    <b>Mindfulness</b> became the most popular North American practice by the mid 20th century. It was adapted from the Theravāda Buddhist tradition
+                    and developed into two practices for stress relief and mental health. <br> Mindfulness-Based Stress Reduction (MBSR) and Mindfulness-Based Cognitive
+                    Therapy (MBCT) are attributed to the work of Howard Kabat-Zinn, a medical researcher at the UMass Center for Mindfulness in the late 1970's.
+                    The program is simple, but challenging: Observe your breath. Be present to your expereince without judging it.
                     </div>
                 </section>
 
                 <!-- 2 — Meditation-Based Studies by condition (single color) -->
                 <section class="step" data-active-index="2">
-                    <div class="title">What is meditation studied for?</div>
-                    To map where clinical attention has concentrated, we aggregated 2,411 meditation trials
-                    registered on ClinicalTrials.gov<sup><a class="cite" href="#sources">B</a></sup> and grouped them
-                    by primary condition, combining mindfulness and other meditation traditions into a single
-                    category. Each bar reports the total number of registered trials for that condition.
-                    <br /><br />
-                    The distribution is concentrated in psychological and stress-related conditions:
-                    <b>chronic pain</b>, <b>stress and burnout</b>, and <b>depression</b> account for the largest
-                    share of trials, while <b>anxiety</b> and <b>neurological or cognitive</b> conditions are studied
-                    far less often. This reflects where meditation has been positioned as a candidate intervention,
-                    not where it has been proven effective. Trial volume measures research interest; it does not, on
-                    its own, establish clinical benefit.
+                    <div class="title">An overview of Clincal Trials on Meditaiton</div>
+                    We compiled three sets of sutdies: 2,411 clinical trials, physiological heart
+                    rate data recorded during meditation sessions, and stress/sleep surveys from 374 participants.
+                    <br>
+                    <a class="sources-link" href="#sources">View all sources →</a>
+                    <br>
+                    Much research has been conducted on psychological and emotional conditions: Stress, Burnout and Depression.
+                    Studies on physiological diseases like Cardiovascular conditions, Neurological/Cognitive Disorders and Anxiety
+                    are much less numerous.
                 </section>
 
                 <!-- 3 — Bridge (full text) -->
@@ -395,63 +380,6 @@
                 tw: Math.random() * Math.PI * 2          // twinkle phase
             };
         }
-        // ---- full-page falling leaves that land in the bar chart ----
-        // The bar chart (viz_bar.js) publishes its bar rects (page coords) to
-        // window.__leafTargets each frame. Leaves spawn at the TOP of the whole
-        // screen, fall through the page background, and settle into those bars —
-        // so the fall reads as coming from above the page, not just the chart.
-        var FALL = [[196,86,42],[214,142,48],[168,58,40],[138,110,52],[122,142,66]];
-        var leaves = [];
-        function spawnLeaf(targets) {
-            var bar = targets[Math.floor(Math.random() * targets.length)];
-            if (!bar || bar.w < 6) return;
-            var landX = bar.x + Math.random() * bar.w;
-            var landY = bar.y + bar.h * (0.3 + Math.random() * 0.4);
-            leaves.push({
-                x: Math.random() * innerWidth,        // enter from anywhere across the top
-                y: -20 - Math.random() * 80,
-                tx: landX, ty: landY,
-                vy: 0.65 + Math.random() * 0.85, sway: Math.random() * 6.28,
-                rot: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.08,
-                swayAmp: 0.7 + Math.random() * 0.8,    // per-leaf sway width
-                size: 7 + Math.random() * 7,
-                col: FALL[Math.floor(Math.random() * FALL.length)], life: 0
-            });
-        }
-        function leafTick() {
-            var lt = window.__leafTargets;
-            var fresh = lt && (( (window.performance?performance.now():Date.now()) - (lt.stamp||0)) < 250);
-            var live = fresh && lt.active && lt.bars && lt.bars.length;
-            // spawn while the chart is active & on-screen
-            if (live) {
-                var rate = lt.filling ? 3 : 1;          // brisk during fill, trickle when full
-                var cap = lt.filling ? 120 : 40;
-                if (leaves.length < cap && (lt.filling || (Math.random() < 0.4))) {
-                    for (var s = 0; s < rate; s++) spawnLeaf(lt.bars);
-                }
-            } else if (leaves.length) {
-                // user scrolled away from the bar section: stop spawning and clear
-                // the leaves quickly so they don't linger over other sections
-                leaves.length = 0;
-            }
-            for (var i = leaves.length - 1; i >= 0; i--) {
-                var lf = leaves[i];
-                lf.life++; lf.sway += 0.035; lf.rot += lf.vr;   // slower sway + spin
-                lf.y += lf.vy;
-                lf.x += Math.sin(lf.sway) * lf.swayAmp + (lf.tx - lf.x) * 0.006;  // gentle drift toward bar
-                var done = lf.y >= lf.ty;
-                if (done) { leaves.splice(i, 1); continue; }
-                var a = Math.min(1, lf.life / 10) * 0.92;
-                ctx.save();
-                ctx.translate(lf.x, lf.y); ctx.rotate(lf.rot);
-                ctx.fillStyle = 'rgba(' + lf.col[0] + ',' + lf.col[1] + ',' + lf.col[2] + ',' + a.toFixed(3) + ')';
-                ctx.beginPath(); ctx.ellipse(0, 0, lf.size, lf.size * 0.6, 0, 0, Math.PI * 2); ctx.fill();
-                ctx.strokeStyle = 'rgba(' + (lf.col[0]*0.6|0) + ',' + (lf.col[1]*0.6|0) + ',' + (lf.col[2]*0.55|0) + ',' + a.toFixed(3) + ')';
-                ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(-lf.size*0.4, 0); ctx.lineTo(lf.size*0.4, 0); ctx.stroke();
-                ctx.restore();
-            }
-        }
-
         function tick(t) {
             ctx.clearRect(0, 0, innerWidth, innerHeight);
             for (var i = 0; i < motes.length; i++) {
@@ -464,7 +392,6 @@
                 ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
                 ctx.fill();
             }
-            leafTick();                 // falling leaves over the full page
             requestAnimationFrame(tick);
         }
         resize(); addEventListener('resize', resize); requestAnimationFrame(tick);
