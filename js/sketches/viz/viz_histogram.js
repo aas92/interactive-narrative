@@ -17,7 +17,7 @@
         var rev = C.reveal(progress);
 
         C.title(p, f,
-            'Where people landed after the exercise',
+            'Reported Stress: Body Scan Group vs. Control Group',
             'Distribution of STAI-State scores by condition');
 
         var colControl  = C.PALETTE.slate;
@@ -86,7 +86,7 @@
         p.fill(90);
         p.textSize(T.axisTitle);
         p.textAlign(p.CENTER, p.TOP);
-        p.text('STAI-State total (20 = lowest, 80 = highest)', f.x + f.w / 2, f.y + f.h + 22);
+        p.text('Stress Scores (20 = lowest, 80 = highest)', f.x + f.w / 2, f.y + f.h + 22);
 
         // --- legend (top-right, same vertical band as title) ---
         var items = [
