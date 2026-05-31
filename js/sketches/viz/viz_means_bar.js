@@ -65,7 +65,7 @@
         p.endShape();
         p.noStroke();
 
-        // --- bars, whiskers, labels ---
+        // --- bars and x-axis labels ---
         for (var i = 0; i < d.length; i++) {
             var r = d[i];
             var cx = f.x + (i + 0.5) * (f.w / d.length);
@@ -80,28 +80,46 @@
             p.fill(col[0], col[1], col[2]);
             p.rect(x, baselineY - barH, bw, barH, 3);
 
-            // value label above bar
-            p.fill(C.PALETTE.ink);
-            p.textAlign(p.CENTER, p.BOTTOM);
-            p.textSize(T.valueLabel);
-            p.text(r.mean.toFixed(1), cx, baselineY - barH - 3);
-
-            // 95 % CI whiskers
-            var ciTop    = yPos(f, r.ci_upper);
-            var ciBottom = yPos(f, r.ci_lower);
-            var capW = bw * 0.35;
-            p.stroke(col[0], col[1], col[2]);
-            p.strokeWeight(1.5);
-            p.line(cx, ciTop, cx, ciBottom);
-            p.line(cx - capW, ciTop,    cx + capW, ciTop);
-            p.line(cx - capW, ciBottom, cx + capW, ciBottom);
-            p.noStroke();
-
             // x-axis label
             p.fill(90);
             p.textAlign(p.CENTER, p.TOP);
             p.textSize(T.annotation);
             p.text(r.label, cx, f.y + f.h + 6);
+        }
+
+        // --- 95 % CI whiskers (drawn over bars) ---
+        p.stroke(0); p.strokeWeight(1.5);
+        for (var i = 0; i < d.length; i++) {
+            var r = d[i];
+            var cx = f.x + (i + 0.5) * (f.w / d.length);
+            var capW = bw * 0.35;
+            var ciTop    = yPos(f, r.ci_upper);
+            var ciBottom = yPos(f, r.ci_lower);
+            p.line(cx, ciTop, cx, ciBottom);
+            p.line(cx - capW, ciTop,    cx + capW, ciTop);
+            p.line(cx - capW, ciBottom, cx + capW, ciBottom);
+        }
+        p.noStroke();
+
+        // --- value labels (drawn last so they appear over whiskers) ---
+        for (var i = 0; i < d.length; i++) {
+            var r = d[i];
+            var cx = f.x + (i + 0.5) * (f.w / d.length);
+            var barTop    = yPos(f, r.mean);
+            var baselineY = yPos(f, LO);
+            var barH = (baselineY - barTop) * rev;
+            var label = r.mean.toFixed(1);
+            p.noStroke();
+            p.textAlign(p.CENTER, p.BOTTOM);
+            p.textSize(T.valueLabel);
+            var labelY = baselineY - barH - 3;
+            var tw = p.textWidth(label);
+            var th = T.valueLabel;
+            var pad = 2;
+            p.fill(255);
+            p.rect(cx - tw / 2 - pad, labelY - th - pad, tw + pad * 2, th + pad * 2);
+            p.fill(C.PALETTE.ink);
+            p.text(label, cx, labelY);
         }
 
         p.pop();
