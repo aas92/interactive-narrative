@@ -11,7 +11,8 @@
 //   5  Bridge text (no viz)
 //   6  Stress vs. sleep quality (r = -0.90)                      -> VizScatter
 //   7  Stress tiers across health metrics                       -> VizBar
-//   8,9,10  Conclusion / Sources / Authors (no viz)
+//   8       STAI mean anxiety by condition                       -> MeansBarViz
+//   9,10,11 Conclusion / Sources / Authors (no viz)
 (function () {
     window.Renderer = {
 
@@ -22,7 +23,18 @@
 
             return fetch('data/meditation_data.json')
                 .then(function (r) { return r.json(); })
-                .then(function (json) { manager.medData = json; return manager.data; })
+                .then(function (json) {
+                    manager.medData = json;
+                    return fetch('data/stai_means.tsv').then(function (r) { return r.text(); });
+                })
+                .then(function (tsv) {
+                    manager.medData.stai_means = window.DataLoader.parseGenericTSV(
+                        tsv,
+                        ['mean', 'ci_lower', 'ci_upper', 'n'],
+                        ['is_control']
+                    );
+                    return manager.data;
+                })
                 .catch(function (err) {
                     console.error('sketch_renderer: failed to load meditation_data.json', err);
                     manager.medData = {};
@@ -43,7 +55,10 @@
             // 6 — stress vs sleep scatter
             if (ai === 6) { window.VizScatter.draw(p, manager, ai, progress); return; }
 
-            // 3,4,5,8,9,10 — full-text / carousel sections: no p5 visualization
+            // 8 — STAI mean anxiety by condition
+            if (ai === 8) { window.MeansBarViz.draw(p, manager, ai, progress); return; }
+
+            // 3,4,5,9,10,11 — full-text / carousel sections: no p5 visualization
         }
     };
 })();

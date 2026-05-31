@@ -1,0 +1,6 @@
+condition	label	mean	ci_lower	ci_upper	n	is_control
+control_book	Control	39.05	38.16	39.94	482	1
+mindful_walking	Mindful walking	34.57	33.69	35.45	421	0
+mindful_breathing	Mindful breathing	34.63	33.73	35.53	472	0
+loving_kindness	Loving-kindness	34.00	33.08	34.91	429	0
+body_scan	Body scan	33.57	32.73	34.41	451	0
