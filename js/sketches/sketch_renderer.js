@@ -12,7 +12,8 @@
 //   6  Stress vs. sleep quality (r = -0.90)                      -> VizScatter
 //   7  Stress tiers across health metrics                       -> VizBar
 //   8       STAI mean anxiety by condition                       -> MeansBarViz
-//   9,10,11 Conclusion / Sources / Authors (no viz)
+//   9       STAI score distribution histogram                    -> HistogramViz
+//   10,11   Conclusion / Sources / Authors (no viz)
 (function () {
     window.Renderer = {
 
@@ -32,6 +33,14 @@
                         tsv,
                         ['mean', 'ci_lower', 'ci_upper', 'n'],
                         ['is_control']
+                    );
+                    return fetch('data/stai_histogram.tsv').then(function (r) { return r.text(); });
+                })
+                .then(function (tsv) {
+                    manager.medData.stai_histogram = window.DataLoader.parseGenericTSV(
+                        tsv,
+                        ['bin_low', 'bin_high', 'control_pct', 'bodyscan_pct'],
+                        []
                     );
                     return manager.data;
                 })
@@ -58,7 +67,10 @@
             // 8 — STAI mean anxiety by condition
             if (ai === 8) { window.MeansBarViz.draw(p, manager, ai, progress); return; }
 
-            // 3,4,5,9,10,11 — full-text / carousel sections: no p5 visualization
+            // 9 — STAI score distribution histogram
+            if (ai === 9) { window.HistogramViz.draw(p, manager, ai, progress); return; }
+
+            // 3,4,5,10,11 — full-text / carousel sections: no p5 visualization
         }
     };
 })();
