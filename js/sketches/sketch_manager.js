@@ -73,7 +73,7 @@ function startP5() {
 
             p.draw = function () {
                 var overlay = !!(document.querySelector('#graphic.layout-tree-overlay'));
-                if (overlay) {
+                if (overlay || self.state.activeIndex === 8) {
                     p.clear();                 // transparent: page shows through edges/header
                 } else {
                     p.background(255);
