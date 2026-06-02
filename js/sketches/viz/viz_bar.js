@@ -232,7 +232,7 @@
         var C = U(), f = C.frame(m), d = (m.medData && m.medData.stress_tiers) || [];
         if (!d.length) return;
         C.title(p, f, 'As stress rises, health markers worsen',
-            'Each metric scaled 0–100% of its own range (honest comparison)');
+            'Each metric scaled 0–100% of its own range');
         var rev = C.reveal(prog);
         var metrics = [
             { key: 'sleep_quality', label: 'Sleep quality', lo: 4, hi: 9, better: 'high' },
