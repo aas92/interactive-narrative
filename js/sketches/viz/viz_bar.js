@@ -38,8 +38,7 @@
         if (!d.length) return;
         // sort descending by total so the psychological/emotional load reads top-down
         d = d.slice().sort(function (a, b) { return b.total - a.total; });
-        C.title(p, f, 'What is meditation studied for?',
-            'Meditation-Based Studies by condition (all meditation types combined)');
+        C.title(p, f, 'Meditation-Based Studies by Condition');
         var maxV = Math.max.apply(null, d.map(function (r) { return r.total; }));
         var rowH = f.h / d.length, barH = rowH * 0.6;
         var col = FALL_BAR;
@@ -239,7 +238,7 @@
             { key: 'heart_rate', label: 'Resting HR', lo: 65, hi: 85, better: 'low' },
             { key: 'daily_steps', label: 'Daily steps', lo: 3000, hi: 10000, better: 'high' }
         ];
-        var tierCols = [C.PALETTE.green, C.PALETTE.amber, C.PALETTE.red];
+        var tierCols = [[44, 123, 182], [253, 174, 97], [215, 48, 39]];
         var groupW = f.w / metrics.length;
         for (var mi = 0; mi < metrics.length; mi++) {
             var mt = metrics[mi], gx = f.x + mi * groupW;
