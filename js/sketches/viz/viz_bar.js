@@ -38,7 +38,8 @@
         if (!d.length) return;
         // sort descending by total so the psychological/emotional load reads top-down
         d = d.slice().sort(function (a, b) { return b.total - a.total; });
-        C.title(p, f, 'Meditation-Based Studies by Condition');
+        C.title(p, f, 'What is meditation studied for?',
+            'Meditation-Based Studies by condition (all meditation types combined)');
         var maxV = Math.max.apply(null, d.map(function (r) { return r.total; }));
         var rowH = f.h / d.length, barH = rowH * 0.6;
         var col = FALL_BAR;
@@ -58,16 +59,15 @@
         var fillT = Math.max(0, Math.min(1, rawT));
         var rev = fillT * fillT * (3 - 2 * fillT);      // smoothstep ease
 
-        p.textSize(T.annotation + 4);     // larger, more legible bar labels
+        p.textSize(T.annotation);
         for (var i = 0; i < d.length; i++) {
             var r = d[i], y = f.y + i * rowH + (rowH - barH) / 2;
             var wFull = (r.total / maxV) * trackW;     // full bar width for this row
             var w = wFull * rev;                        // self-fill driven width
 
-            // unfilled bar track painted in the PAGE paper tone (not white), so
-            // the empty portion blends into the page background
+            // faint bar track so the target is legible before leaves fill it
             p.noStroke();
-            p.fill(241, 236, 224);                      // matches --paper-bottom (#F1ECE0)
+            p.fill(col[0], col[1], col[2], 30);
             p.rect(x0, y, wFull, barH, 2);
 
             // the leaf-filled bar: solid fall-tone fill (the visual "level") plus
@@ -76,14 +76,14 @@
             p.rect(x0, y, w, barH, 2);
             leafFill_settledTexture(p, sys, i, x0, y, w, barH);
 
-            // labels (bigger fonts)
+            // labels (unchanged)
             p.fill(C.PALETTE.ink);
             p.textAlign(p.RIGHT, p.CENTER);
-            p.textSize(T.annotation + 4);
+            p.textSize(T.annotation);
             p.text(r.condition, f.x + 78, y + barH / 2);
-            p.fill(90);
+            p.fill(110);
             p.textAlign(p.LEFT, p.CENTER);
-            p.textSize(T.valueLabel + 4);
+            p.textSize(T.valueLabel);
             p.text(r.total, f.x + 88 + w, y + barH / 2);
         }
 
@@ -231,7 +231,7 @@
         var C = U(), f = C.frame(m), d = (m.medData && m.medData.stress_tiers) || [];
         if (!d.length) return;
         C.title(p, f, 'As stress rises, health markers worsen',
-            'Each metric scaled 0–100% of its own range');
+            'Each metric scaled 0–100% of its own range (honest comparison)');
         var rev = C.reveal(prog);
         var metrics = [
             { key: 'sleep_quality', label: 'Sleep quality', lo: 4, hi: 9, better: 'high' },

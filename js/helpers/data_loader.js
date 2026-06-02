@@ -23,25 +23,7 @@
 
     window.DataLoader = {
         parseTSV: parseTSV,
-        loadTSV: loadTSV,
-
-        parseGenericTSV: function (text, numericCols, boolCols) {
-            var lines = (text || '').trim().split(/\r?\n/);
-            if (lines.length < 2) return [];
-            var headers = lines[0].split('\t');
-            var nc = numericCols || [], bc = boolCols || [];
-            return lines.slice(1).map(function (line) {
-                var parts = line.split('\t');
-                var row = {};
-                headers.forEach(function (h, i) {
-                    var v = (parts[i] || '').trim();
-                    if (nc.indexOf(h) !== -1) row[h] = parseFloat(v);
-                    else if (bc.indexOf(h) !== -1) row[h] = v === '1' || v === 'true';
-                    else row[h] = v;
-                });
-                return row;
-            });
-        }
+        loadTSV: loadTSV
     };
 
     // Shared preprocess helper: normalize rows into the shape sketches expect.
