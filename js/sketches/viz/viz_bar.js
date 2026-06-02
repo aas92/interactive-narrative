@@ -38,8 +38,7 @@
         if (!d.length) return;
         // sort descending by total so the psychological/emotional load reads top-down
         d = d.slice().sort(function (a, b) { return b.total - a.total; });
-        C.title(p, f, 'What is meditation studied for?',
-            'Meditation-Based Studies by condition (all meditation types combined)');
+        C.title(p, f, 'Meditation-Based Studies by Condition');
         var maxV = Math.max.apply(null, d.map(function (r) { return r.total; }));
         var rowH = f.h / d.length, barH = rowH * 0.6;
         var col = FALL_BAR;

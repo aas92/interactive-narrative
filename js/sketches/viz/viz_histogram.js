@@ -101,7 +101,7 @@
             legendW += 16 + p.textWidth(items[j][0]) + 22;
         }
         var lx = f.ox + f.W - 8 - legendW;
-        var ly = f.oy + 20;
+        var ly = f.oy + 40;
         for (var j = 0; j < items.length; j++) {
             var c = items[j][1];
             p.noStroke();
