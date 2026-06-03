@@ -81,6 +81,10 @@
             font-size: 22px;
         }
         
+        #sections .step[data-active-index="2"] {
+            font-size: 19px;
+        }
+        
         .sources-link {
             color: var(--link);
             text-decoration: underline;
@@ -507,11 +511,15 @@
 
                 <section class="step" data-active-index="2">
                     <div class="title">What is meditation studied for?</div>
-                    To map where clinical attention has concentrated, we aggregated 2,411 meditation trials registered on ClinicalTrials.gov<sup><a class="cite" href="#sources">B</a></sup> and grouped them by primary condition, combining mindfulness and
-                    other meditation traditions into a single category. Each bar reports the total number of registered trials for that condition.
-                    <br /><br /> The distribution is concentrated in psychological and stress-related conditions:
-                    <b>chronic pain</b>, <b>stress and burnout</b>, and <b>depression</b> account for the largest share of trials, while <b>anxiety</b> and <b>neurological or cognitive</b> conditions are studied far less often. This reflects where meditation
-                    has been positioned as a candidate intervention, not where it has been proven effective. Trial volume measures research interest; it does not, on its own, establish clinical benefit.
+                    <div>
+                        Before we ask whether meditation works, it helps to see where the research has gone. We pooled 2,411 trials registered on ClinicalTrials.gov<sup><a class="cite" href="#sources">B</a></sup>, combining mindfulness with other meditation
+                        traditions, and grouped each by the primary condition it set out to treat.
+                        <br /><br /> The effort is lopsided. <b>Chronic pain</b>, <b>stress and burnout</b>, and <b>depression</b> account for the largest share of trials, while <b>anxiety</b> and <b>neurological or cognitive</b> conditions are studied
+                        far less. The chart shows where meditation has been <i>proposed</i> as a treatment, not where it has been <i>proven</i> to work: a tall bar reflects research interest, not demonstrated benefit.
+                        <br /><br /> Whether that interest is justified is the question the rest of this piece takes up. A large multi-site randomized trial of self-administered mindfulness found a real reduction in stress<sup><a class="cite" href="#sources">F</a></sup>;
+                        from there we examine the underlying data on attention<sup><a class="cite" href="#sources">A</a></sup>, heart rate<sup><a class="cite" href="#sources">C</a></sup>, sleep<sup><a class="cite" href="#sources">D</a></sup>, and the
+                        techniques themselves<sup><a class="cite" href="#sources">E</a></sup> to move from how often meditation is studied to how well it actually works.
+                    </div>
                 </section>
 
                 <section class="step" data-active-index="3" data-layout="full-text">
@@ -764,11 +772,11 @@
     <script src="js/helpers/sections.js"></script>
     <script src="js/sketches/sketch_manager.js"></script>
     <script src="js/sketches/examples/sketch_grid.js"></script>
-    <script src="js/sketches/viz/viz_chart_utils.js"></script>
-    <script src="js/sketches/viz/viz_title.js?v=8"></script>
+    <script src="js/sketches/viz/viz_chart_utils.js?v=2"></script>
+    <script src="js/sketches/viz/viz_title.js?v=9"></script>
     <script src="js/sketches/viz/viz_progress_color.js"></script>
     <script src="js/sketches/viz/viz_scatter.js"></script>
-    <script src="js/sketches/viz/viz_bar.js"></script>
+    <script src="js/sketches/viz/viz_bar.js?v=2"></script>
     <script src="js/sketches/viz/viz_means_bar.js"></script>
     <script src="js/sketches/viz/viz_histogram.js"></script>
     <script src="js/sketches/sketch_renderer.js"></script>
