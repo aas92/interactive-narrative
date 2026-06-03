@@ -66,8 +66,10 @@
         #sections .step,
         #sections .step .title,
         #site-header { font-family: "Times New Roman", Times, serif; }
-        #sections .step { font-size: 14px; line-height: 1.65; color: var(--ink); }
-        #sections .step .title { font-family: "Times New Roman", Times, serif; font-size: 22px; }
+        #sections .step { font-size: 18px; line-height: 1.65; color: var(--ink); }
+        #sections .step.bridge{ font-size: 20px; line-height: 1.65; color: var(--ink); }
+        #sections .step .title { font-family: "Times New Roman", Times, serif; font-size: 24px; }
+        #sections .step.bridge .title { font-family: "Times New Roman", Times, serif; font-size: 32px; }
         .sources-link { color: var(--link); text-decoration: underline; font-weight: 700; }
         sup .cite, .cite { color: var(--link); text-decoration: none; font-weight: 700; }
         sup .cite:hover { text-decoration: underline; }
@@ -117,15 +119,6 @@
             left: 0; right: 0; top: 0; bottom: 0; height: 100vh; width: 100vw;
             z-index: 40;
         }
-        /* full-viewport readability tint for the tree sections: covers the whole
-           screen edge-to-edge (incl. the bare left gutter), sitting OVER the tree
-           but UNDER the text panels. Raise/lower the alpha to taste, or delete
-           this rule to remove the tint entirely. */
-        #graphic.layout-tree-overlay::after {
-            content: ""; position: fixed; inset: 0; z-index: 50;
-            background: rgba(246, 244, 236, 0.20);
-            pointer-events: none;
-        }
         /* keep the scroll height of the steps but make them invisible space —
            the visible text is the pinned panel below */
         #graphic.layout-tree-overlay #sections {
@@ -168,56 +161,25 @@
             opacity: 1;
         }
 
-        /* ---- Heart-rate "two hearts diverging" ---- */
-        .two-hearts { width: min(92vw, 1100px); margin: 0 auto; font-family: "Times New Roman", Times, serif; }
-        .th-toggle { display: flex; gap: 0; justify-content: center; margin: 4px 0 22px;
-                     border: 1px solid var(--ink-muted, #8a9b8e); border-radius: 999px; width: max-content; margin-left: auto; margin-right: auto; overflow: hidden; }
-        .th-btn { font-family: "Times New Roman", Times, serif; font-size: 15px; cursor: pointer;
-                  border: none; background: transparent; padding: 9px 22px; color: var(--ink-soft, #5a6b60); transition: all .25s; }
-        .th-btn.th-active { background: var(--ink-title, #16201b); color: #fff; }
-        .th-stage { display: flex; align-items: center; justify-content: center; gap: 3vw; }
-        .th-heart { flex: 1 1 0; max-width: 520px; text-align: center; }
-        .th-vs { font-style: italic; color: var(--ink-muted, #8a9b8e); font-size: 17px; padding: 0 4px; }
-        .th-name { font-size: 17px; font-weight: 700; color: var(--ink-title, #16201b); margin-bottom: 4px; }
-        .th-sub { font-weight: 400; font-style: italic; color: var(--ink-muted, #8a9b8e); font-size: 13px; }
-        .th-canvas { display: block; width: 100%; }
-        .th-bpm { margin-top: 2px; }
-        .th-bpm-num { font-size: 34px; font-weight: 700; color: var(--ink-title, #16201b); }
-        .th-bpm-unit { font-size: 14px; color: var(--ink-muted, #8a9b8e); margin-left: 4px; }
-        .th-spark { display: block; width: 100%; height: 176px; margin-top: 2px; }
-        .th-caption { text-align: center; font-size: 15px; line-height: 1.6; color: var(--ink, #1f2730);
-                      max-width: 620px; margin: 18px auto 0; }
-        .th-note { text-align: center; font-size: 12px; line-height: 1.5; color: var(--ink-muted, #8a9b8e);
-                   max-width: 600px; margin: 12px auto 0; font-style: italic; }
-        /* ---- heart section: sticky hearts on one side, story scrolls past ---- */
-        /* This section lives inside the full-text layout's 800px centered column
-           (#graphic.layout-full-text #sections). Break OUT of that column to span
-           the real viewport ("full-bleed"), so the hearts + story have room and
-           the text never spills off the edge. */
-        .hr-scrolly { display: flex; align-items: flex-start; gap: 2.5vw;
-                      width: 94vw; margin-left: calc(50% - 47vw); margin-right: calc(50% - 47vw);
-                      box-sizing: border-box; }
-        .hr-graphic { position: sticky; top: 7vh; flex: 0 0 56%; min-width: 0; align-self: flex-start; }
-        .hr-graphic .two-hearts { width: 100%; }
-        /* the story column carries the narrative now, so hide the in-viz caption/note */
-        .hr-graphic .th-caption, .hr-graphic .th-note { display: none; }
-        .hr-story { flex: 1 1 0; min-width: 0; padding: 7vh 0 9vh; text-align: left; color: var(--ink, #1f2730); }
-        .hr-story .title { text-align: left; margin-bottom: 20px; font-size: 27px; }
-        .hr-story p { font-size: 18px; line-height: 1.72; margin: 0 0 22px; }
-        .hr-switch { margin: 28px 0; }
-        .hr-switch button { font-family: "Times New Roman", Times, serif; font-size: 17px; cursor: pointer;
-                      color: #fff; background: var(--ink-title, #16201b); border: none;
-                      padding: 12px 24px; border-radius: 999px; transition: opacity .2s, transform .2s; }
-        .hr-switch button:hover { opacity: .88; transform: translateY(-1px); }
-        .hr-story .hr-limit { font-size: 15px; line-height: 1.6; background: rgba(120,140,110,0.09);
-                      border-left: 3px solid var(--ink-muted, #8a9b8e); padding: 14px 16px; border-radius: 2px; }
-        .hr-story .hr-cite { font-size: 13px; line-height: 1.5; color: var(--ink-muted, #8a9b8e); margin-top: 18px; }
-        @media (max-width: 880px) {
-            .hr-scrolly { flex-direction: column; width: 92vw;
-                          margin-left: calc(50% - 46vw); margin-right: calc(50% - 46vw); }
-            .hr-graphic { position: static; flex-basis: auto; width: 100%; }
-            .hr-story { padding: 24px 0 0; }
-        }
+        /* ---- Heart-rate story carousel ---- */
+        .hr-carousel { width: min(78vw, 760px); margin: 0 auto; font-size: 14px; }
+        .hr-tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+        .hr-tab { font-family: "Times New Roman", Times, serif; font-size: 14px; cursor: pointer;
+                  border: 1px solid #e1e4e8; background: #fff; padding: 7px 14px; border-radius: 999px;
+                  color: #5a6772; transition: all .2s; }
+        .hr-tab[aria-selected="true"] { background: #2d3741; color: #fff; border-color: #2d3741; }
+        .hr-card { background: #fff; border: 1px solid #e1e4e8; border-radius: 14px; padding: 18px 20px 22px;
+                   box-shadow: 0 1px 2px rgba(0,0,0,.04); transition: transform .35s ease, box-shadow .35s ease;
+                   transform-origin: center; }
+        .hr-card:hover { transform: scale(1.03); box-shadow: 0 10px 30px rgba(0,0,0,.10); }
+        .hr-ctitle { font-size: 19px; font-weight: 700; margin: 0 0 2px; color: #111; }
+        .hr-csub { font-size: 14px; color: #5a6772; margin: 0 0 12px; }
+        .hr-canvas-box { position: relative; height: 320px; }
+        .hr-take { font-size: 13px; color: #404a54; margin-top: 12px; border-left: 3px solid #2d3741; padding-left: 10px; }
+        .hr-dots { display: flex; gap: 6px; margin-top: 14px; justify-content: center; }
+        .hr-dot { width: 34px; height: 4px; border-radius: 2px; background: #e1e4e8; cursor: pointer; transition: background .2s; }
+        .hr-dot[aria-current="true"] { background: #2d3741; }
+        .hr-hint { text-align: center; font-size: 12px; color: #9aa6b1; margin-top: 8px; }
     </style>
 </head>
 
@@ -227,14 +189,14 @@
     <!-- OPENING TITLE CARD: full-screen hero; fades out as the user scrolls into the tree -->
     <div id="hero">
         <div id="hero-inner">
-            <h1 id="hero-title">Is mindfulness an effective treatment toward a healthier lifestyle?</h1>
+            <h1 id="hero-title">How Does Mindfulness Make us Healthy?</h1>
             <div id="hero-authors">Franck Kepnang &amp; Aaron Stern</div>
             <div id="hero-scroll">scroll to begin</div>
         </div>
     </div>
 
     <header id="site-header">
-        <span id="site-title">Is mindfulness an effective treatment?</span>
+        <span id="site-title">How Does Mindfulness Make us Healthy?</span>
         <span id="site-course">IMT 561 Data Visualization: Design and Development</span>
         <span id="debug-state"></span>
     </header>
@@ -248,91 +210,78 @@
                 <!-- 0 — Tree intro: religious / pre-scientific forms (tree on right, copy left) -->
                 <section class="step" data-active-index="0" data-layout="tree-overlay">
                     <div class="tree-panel">
-                    <div class="title">Meditation is older than medicine</div>
-                    Long before it entered the clinic, meditation was a devotional discipline. The word itself
-                    descends from the Latin <i>meditārī</i> — "to think over, to reflect upon"<sup><a class="cite"
-                    href="#sources">1</a></sup>. Across cultures, distinct contemplative forms took root:
+                    <div class="title">Meditation as a spiritual practice</div>
+                    Across cultures, each religion has distinct contemplative practices:
                     <b>Dhikr</b> in Islam, <b>Lectio Divina</b> in Christianity, <b>Hitbodedut</b> in Judaism,
                     <b>Vipassanā</b> in the Pāli Buddhist tradition<sup><a class="cite" href="#sources">2</a></sup>,
                     <b>Prāṇāyāma</b> in Hinduism, and <b>Neidan</b> in Daoism.
                     <br /><br />
-                    These practices share a single root — the deliberate turning of attention inward — but their
-                    purpose was spiritual, not therapeutic. None were designed to be measured. Scroll to grow the
-                    tree from these roots, then climb toward its modern crown.
+                    Meditation practices are diverse and widespread but there is a common root: quieting the mind and focusing attention. 
+                    It wasn't until meditative practices spread throughout North America in the 20th century that Western Medicine became 
+                    interested in studying its potential palliative benefits.
                     </div>
                 </section>
 
                 <!-- 1 — Tree intro: science-based crown (red circle highlights the top) -->
                 <section class="step" data-active-index="1" data-layout="tree-overlay">
                     <div class="tree-panel">
-                    <div class="title">Then science began to ask</div>
-                    Beginning in the late twentieth century, clinicians took the oldest of these techniques and
-                    subjected it to measurement. <b>Mindfulness</b> — adapted from the Theravāda Buddhist tradition
-                    and standardized as Mindfulness-Based Stress Reduction (MBSR) and Mindfulness-Based Cognitive
-                    Therapy (MBCT) at the UMass Center for Mindfulness — became the most-studied form<sup><a
-                    class="cite" href="#sources">3</a></sup>. Its core instruction is deceptively simple: observe
-                    your thoughts without attaching judgment.
-                    <br /><br />
-                    At the crown of the tree, circled in red, the question itself changes. No longer <i>is this
-                    sacred?</i> but <i>does it work, and how would we know?</i>
-                    <br /><br />
-                    To find out, we looked at the evidence three ways: 2,411 clinical trials, physiological heart
-                    rate data recorded during meditation sessions, and health surveys from 374 participants.
-                    <br /><br />
-                    <a class="sources-link" href="#sources">View all sources →</a>
+                    <div class="title">Meditation as an object of study</div>
+                    <b>Mindfulness</b> became the most popular North American practice by the mid 20th century. It was adapted from the Theravāda Buddhist tradition
+                    and developed into two practices for stress relief and mental health. <br><br> Mindfulness-Based Stress Reduction (MBSR) and Mindfulness-Based Cognitive
+                    Therapy (MBCT) are attributed to the work of Howard Kabat-Zinn, a medical researcher at the UMass Center for Mindfulness in the late 1970's.
+                    <br><br>The program is simple, but challenging: Observe your breath. Be present to your expereince without judging it.
                     </div>
                 </section>
 
                 <!-- 2 — Meditation-Based Studies by condition (single color) -->
                 <section class="step" data-active-index="2">
-                    <div class="title">What is meditation studied for?</div>
-                    To map where clinical attention has concentrated, we aggregated 2,411 meditation trials
-                    registered on ClinicalTrials.gov<sup><a class="cite" href="#sources">B</a></sup> and grouped them
-                    by primary condition, combining mindfulness and other meditation traditions into a single
-                    category. Each bar reports the total number of registered trials for that condition.
-                    <br /><br />
-                    The distribution is concentrated in psychological and stress-related conditions:
-                    <b>chronic pain</b>, <b>stress and burnout</b>, and <b>depression</b> account for the largest
-                    share of trials, while <b>anxiety</b> and <b>neurological or cognitive</b> conditions are studied
-                    far less often. This reflects where meditation has been positioned as a candidate intervention,
-                    not where it has been proven effective. Trial volume measures research interest; it does not, on
-                    its own, establish clinical benefit.
+                    <div class="title">An Overview of Clincal Trials on Meditaiton</div>
+                    This chart sumarizes over 2,000 clinical trials using mediation as an intervention on various conditions.
+                    Much research has been conducted on psychological and emotional conditions: Stress, Burnout and Depression.
+                    Studies on physiological diseases like Cardiovascular conditions, Neurological/Cognitive Disorders and Anxiety
+                    are much less numerous.
+                    <br>
+                    <a class="sources-link" href="#sources">View all sources →</a>
+                    <br>
+                    We want to better understand what actually happens in our bodies that makes meditation/mindfulness part of a healthy lifestyle.
+                    
                 </section>
 
                 <!-- 3 — Bridge (full text) -->
-                <section class="step" data-active-index="3" data-layout="full-text">
-                    <div class="title">But volume isn't proof</div>
-                    Thousands of trials tell us meditation is <i>studied</i> — not that it <i>works</i>. To judge that,
-                    we look inside the body. We start with a classic physiological question, and the data turns out to
-                    tell more than one story.
+                <section class="step bridge" data-active-index="3" data-layout="full-text">
+                    <div class="title">How Meditation affects our bodies</div>
+                    Meditation is about focusing on the breath. Our respiratory system delivers oxygen throughout the body in our blood.
+                    Science tells us that deep breathing regulates our nervous system and heart rate. We can use movement meditation to elevate our
+                    heart rate, like Yoga. Or we can use a different movement meditation, Chi Gong, to lower it. Both movement based practices target
+                    our respiration and heart rate, but in opposite directions.
                 </section>
 
                 <!-- 4 — Heart-rate STORY CAROUSEL (HTML / Chart.js, no p5 viz) -->
                 <section class="step" data-active-index="4" data-layout="full-text">
-                    <div class="hr-scrolly">
-                        <div class="hr-graphic">
-                            <div class="two-hearts" id="hrTwoHearts"></div>
+                    <div class="title">What can a heartbeat tell us about meditation?</div>
+                    <div class="hr-carousel" id="hrCarousel">
+                        <div class="hr-tabs" id="hrTabs" role="tablist"></div>
+                        <div class="hr-card" id="hrCard">
+                            <p class="hr-ctitle" id="hrTitle"></p>
+                            <p class="hr-csub" id="hrSub"></p>
+                            <div class="hr-canvas-box"><canvas id="hrChart"></canvas></div>
+                            <p class="hr-take" id="hrTake"></p>
                         </div>
-                        <div class="hr-story">
-                            <div class="title">What can a heartbeat tell us about meditation?</div>
-                            <p>Before anyone meditates, the two hearts are simply at rest &mdash; and already very different. The chi practitioner sits near <b>81</b> beats per minute; the kundalini practitioner is much calmer, around <b>61</b>. Steady and predictable, nothing dramatic.</p>
-                            <div class="hr-switch">
-                                <button id="hrToDuring" type="button">&#9654;&nbsp; Start the meditation</button>
-                            </div>
-                            <p>Now they meditate &mdash; and head in opposite directions. The chi practitioner&rsquo;s heart eases down a little. The kundalini practitioner&rsquo;s races <i>upward</i>, past <b>90</b>, driven by fast, forceful breathing. Same word, &ldquo;meditation,&rdquo; two opposite effects on the body.</p>
-                            <p>So meditation isn&rsquo;t one thing. The quiet, mindful kind can gently lower your heart rate; the active kind winds it up. Both are useful for the right goal &mdash; which is why mindfulness works best as a <b>complement</b> to a healthy routine, not a cure on its own.</p>
-                            <p class="hr-limit"><b>One caveat:</b> this is a small study &mdash; 8 chi and 4 kundalini practitioners &mdash; and each heart here is a single person. It shows the pattern clearly, but treat the exact numbers as a hint, not proof.</p>
-                            <p class="hr-cite">Source: Peng et&nbsp;al., &ldquo;Exaggerated Heart Rate Oscillations During Two Meditation Techniques,&rdquo; <i>Int. J. Cardiol.</i> (1999). See <a class="sources-link" href="#sources">Sources</a> for full references.</p>
-                        </div>
+                        <div class="hr-dots" id="hrDots"></div>
+                        <p class="hr-hint">Rotates every 3s · hover to focus · click a tab or dot to hold a story</p>
                     </div>
                 </section>
 
                 <!-- 5 — Bridge (full text) -->
-                <section class="step" data-active-index="5" data-layout="full-text">
-                    <div class="title">So where does meditation clearly help?</div>
-                    The physiological picture is mixed. The stronger case lives one step upstream — in <b>stress</b>,
-                    and the damage chronic stress does to sleep. This is the mechanism meditation is best positioned to
-                    interrupt.
+                <section class="step bridge" data-active-index="5" data-layout="full-text">
+                    <div class="title">The Holistic Health Picture</div> 
+                    <ol>The four pillars of health are:
+                    <li>Sleep</li>
+                    <li>Nutrition</li>
+                    <li>Exercise</li>
+                    <li>Stress</li>
+                </ol>
+                To maximize our health outcomes, we have to find ways to regularly meet all of these needs. <i>How does meditation fit into these health pillars?</i>
                 </section>
 
                 <!-- 6 — Stress x sleep scatter -->
@@ -352,7 +301,7 @@
                     Stress has a negative effect on sleep. If we want to sleep better, we have to find ways to lower our stress!
                 </section>
 
-                <!-- 8 — Conclusion (full text) -->
+                <!-- 8 — Means Bar Chart -->
                 <section class="step" data-active-index="8">
                     <div class="title">Meditation lowers reported stress after a single session</div>
                     Alessandro Sparacio and several collaborators ran a 37 site study with over 2,200 participants to study how meditation
@@ -365,7 +314,7 @@ Our findings suggest that mindfulness may be beneficial for reducing self-report
 <a href = https://osf.io/6w2zm/wiki?wiki=g7zf4>Self-Administered Mindfulness Interventions Reduce Stress in a Large, Randomized Controlled Multi-Site Study.</a>
                 </section>
 
-                <!-- 9 — Sources (full text) -->
+                <!-- 9 — STAI Histogram -->
                 <section class="step" data-active-index="9">
                     <div class="title">Body Scans lowered stress more than the control</div>
                     The participants were randomly organized into different groups, one for control and the others into different
@@ -375,23 +324,17 @@ Our findings suggest that mindfulness may be beneficial for reducing self-report
 
                 </section>
 
-                <!-- 10 — Authors (full text) -->
-                <section class="step author-section" data-active-index="10" data-layout="full-text">
-                    <div class="title">About the Authors</div>
-                    <div class="authors">
-                        <div class="author">
-                            <div class="author-name">Franck Kepnang</div>
-                            <div class="author-bio">MSIM candidate, University of Washington. Interested in data
-                                storytelling and health informatics.</div>
-                        </div>
-                        <div class="author">
-                            <div class="author-name">Aaron Stern</div>
-                            <div class="author-bio">MSIM candidate, University of Washington. Interested in interactive
-                                visualization and evidence communication.</div>
-                        </div>
-                    </div>
+                <!-- 10 — Conclusion (full text) -->
+                <section class="step" data-active-index="10" data-layout="full-text">
+                    <div class="title">The honest conclusion</div>
+                    The data supports a measured claim, not a miracle. Meditation has strong, replicated benefits for
+                    attention and for the stress mechanisms that erode sleep. But within-session physiological effects like heart
+                    rate are inconsistent and technique-dependent. Meditation works best as one practice among
+                    several — paired with sleep hygiene, activity, and care — not as a standalone cure.
                 </section>
-<section class="step" data-active-index="11" data-layout="full-text" id="sources">
+
+                <!-- 11 — Sources (full text) -->
+                <section class="step" data-active-index="11" data-layout="full-text" id="sources">
                     <div class="title">Sources</div>
                     <div style="font-size:0.95em; line-height:1.8;">
                         <b>Definitions &amp; background</b><br />
@@ -414,6 +357,22 @@ Our findings suggest that mindfulness may be beneficial for reducing self-report
                     </div>
                 </section>
 
+                <!-- 10 — Authors (full text) -->
+                <section class="step author-section" data-active-index="10" data-layout="full-text">
+                    <div class="title">About the Authors</div>
+                    <div class="authors">
+                        <div class="author">
+                            <div class="author-name">Franck Kepnang</div>
+                            <div class="author-bio">MSIM candidate, University of Washington. Interested in data
+                                storytelling and health informatics.</div>
+                        </div>
+                        <div class="author">
+                            <div class="author-name">Aaron Stern</div>
+                            <div class="author-bio">MSIM candidate, University of Washington. Interested in interactive
+                                visualization and evidence communication.</div>
+                        </div>
+                    </div>
+                </section>
 
             </div>
             <div id='vis' class='vis-hidden'>
@@ -429,13 +388,6 @@ Our findings suggest that mindfulness may be beneficial for reducing self-report
     <!-- Background: drifting dust/light motes + opening hero fade-on-scroll -->
     <script>
     (function () {
-        // ============================================================
-        //  FALLING-LEAVES ANIMATION  —  EASY ON / OFF SWITCH
-        //  true  = leaves drift down and settle into the bar chart
-        //  false = no falling leaves at all
-        var LEAVES_ENABLED = false;
-        // ============================================================
-
         // ---- drifting dust/light motes ----
         var cv = document.getElementById('motes'), ctx = cv.getContext('2d');
         // pull the mote color from the central CSS theme palette (--mote)
@@ -461,64 +413,6 @@ Our findings suggest that mindfulness may be beneficial for reducing self-report
                 tw: Math.random() * Math.PI * 2          // twinkle phase
             };
         }
-        // ---- full-page falling leaves that land in the bar chart ----
-        // The bar chart (viz_bar.js) publishes its bar rects (page coords) to
-        // window.__leafTargets each frame. Leaves spawn at the TOP of the whole
-        // screen, fall through the page background, and settle into those bars —
-        // so the fall reads as coming from above the page, not just the chart.
-        var FALL = [[196,86,42],[214,142,48],[168,58,40],[138,110,52],[122,142,66]];
-        var leaves = [];
-        function spawnLeaf(targets) {
-            var bar = targets[Math.floor(Math.random() * targets.length)];
-            if (!bar || bar.w < 6) return;
-            var landX = bar.x + Math.random() * bar.w;
-            var landY = bar.y + bar.h * (0.3 + Math.random() * 0.4);
-            leaves.push({
-                x: Math.random() * innerWidth,        // enter from anywhere across the top
-                y: -20 - Math.random() * 80,
-                tx: landX, ty: landY,
-                vy: 0.65 + Math.random() * 0.85, sway: Math.random() * 6.28,
-                rot: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.08,
-                swayAmp: 0.7 + Math.random() * 0.8,    // per-leaf sway width
-                size: 7 + Math.random() * 7,
-                col: FALL[Math.floor(Math.random() * FALL.length)], life: 0
-            });
-        }
-        function leafTick() {
-            if (!LEAVES_ENABLED) { if (leaves.length) leaves.length = 0; return; }
-            var lt = window.__leafTargets;
-            var fresh = lt && (( (window.performance?performance.now():Date.now()) - (lt.stamp||0)) < 250);
-            var live = fresh && lt.active && lt.bars && lt.bars.length;
-            // spawn while the chart is active & on-screen
-            if (live) {
-                var rate = lt.filling ? 3 : 1;          // brisk during fill, trickle when full
-                var cap = lt.filling ? 120 : 40;
-                if (leaves.length < cap && (lt.filling || (Math.random() < 0.4))) {
-                    for (var s = 0; s < rate; s++) spawnLeaf(lt.bars);
-                }
-            } else if (leaves.length) {
-                // user scrolled away from the bar section: stop spawning and clear
-                // the leaves quickly so they don't linger over other sections
-                leaves.length = 0;
-            }
-            for (var i = leaves.length - 1; i >= 0; i--) {
-                var lf = leaves[i];
-                lf.life++; lf.sway += 0.035; lf.rot += lf.vr;   // slower sway + spin
-                lf.y += lf.vy;
-                lf.x += Math.sin(lf.sway) * lf.swayAmp + (lf.tx - lf.x) * 0.006;  // gentle drift toward bar
-                var done = lf.y >= lf.ty;
-                if (done) { leaves.splice(i, 1); continue; }
-                var a = Math.min(1, lf.life / 10) * 0.92;
-                ctx.save();
-                ctx.translate(lf.x, lf.y); ctx.rotate(lf.rot);
-                ctx.fillStyle = 'rgba(' + lf.col[0] + ',' + lf.col[1] + ',' + lf.col[2] + ',' + a.toFixed(3) + ')';
-                ctx.beginPath(); ctx.ellipse(0, 0, lf.size, lf.size * 0.6, 0, 0, Math.PI * 2); ctx.fill();
-                ctx.strokeStyle = 'rgba(' + (lf.col[0]*0.6|0) + ',' + (lf.col[1]*0.6|0) + ',' + (lf.col[2]*0.55|0) + ',' + a.toFixed(3) + ')';
-                ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(-lf.size*0.4, 0); ctx.lineTo(lf.size*0.4, 0); ctx.stroke();
-                ctx.restore();
-            }
-        }
-
         function tick(t) {
             ctx.clearRect(0, 0, innerWidth, innerHeight);
             for (var i = 0; i < motes.length; i++) {
@@ -531,7 +425,6 @@ Our findings suggest that mindfulness may be beneficial for reducing self-report
                 ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
                 ctx.fill();
             }
-            leafTick();                 // falling leaves over the full page
             requestAnimationFrame(tick);
         }
         resize(); addEventListener('resize', resize); requestAnimationFrame(tick);
@@ -540,7 +433,7 @@ Our findings suggest that mindfulness may be beneficial for reducing self-report
         var hero = document.getElementById('hero');
         function onScroll() {
             var h = innerHeight;
-            var p = Math.min(1, scrollY / (h * 0.32));   // fully gone by ~0.32 viewport, before the first panel
+            var p = Math.min(1, scrollY / (h * 0.7));   // fully gone by 0.7 viewport
             hero.style.opacity = (1 - p).toFixed(3);
             hero.style.transform = 'translateY(' + (-p * 60).toFixed(1) + 'px)';
             hero.style.display = p >= 1 ? 'none' : 'flex';
@@ -572,8 +465,8 @@ Our findings suggest that mindfulness may be beneficial for reducing self-report
     <script src="js/sketches/viz/viz_means_bar.js"></script>
     <script src="js/sketches/viz/viz_histogram.js"></script>
     <script src="js/sketches/sketch_renderer.js"></script>
-    <!-- heart-rate "two hearts diverging" (Canvas, section 4) -->
-    <script src="js/hr_two_hearts.js"></script>
+    <!-- heart-rate carousel (HTML/Chart.js, section 4) -->
+    <script src="js/heart_rate_carousel.js"></script>
 
 </body>
 

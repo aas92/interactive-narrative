@@ -337,42 +337,59 @@
 
                 <!-- 6 — Stress x sleep scatter -->
                 <section class="step" data-active-index="6">
-                    <div class="title">Stress and Sleep</div>
-                    This study looked at 374 individuals and found that stress and sleep quality are strongly, negatively linked
-                    (r = −0.90). Even people without insomnia or sleep apnea reported sleeping worse as their stress increased. <br><br> You can imagine how this moves in a cycle:
-                    The higher stress you feel, your sleep quality gets lower, your body can't recover in sleep, and the more stress you feel.
+                    <div class="title">Stress and sleep move together</div>
+                    Across 374 individuals, stress and sleep quality are strongly, negatively linked
+                    (<b>r = −0.90</b>). As reported stress climbs, sleep quality collapses. Color marks who carries a
+                    diagnosed sleep disorder — they cluster exactly where you'd expect.
                 </section>
 
                 <!-- 7 — Stress tiers -->
                 <section class="step" data-active-index="7">
                     <div class="title">High stress, worse on every axis</div>
-                    This chart aggregates all the participants from the previously mentioned study and summarizes their findings: low-stress
-                    individuals average 8.3 sleep quality and 67 BPM resting heart rate; high-stress
-                    individuals fall to 5.9 and rise to 74 BPM.<br><br>
-                    Stress has a negative effect on sleep. If we want to sleep better, we have to find ways to lower our stress!
+                    Group people into low, mid, and high stress and the pattern holds across metrics: low-stress
+                    individuals average <b>8.3</b> sleep quality and <b>67 BPM</b> resting heart rate; high-stress
+                    individuals fall to <b>5.9</b> and rise to <b>74 BPM</b>. Each bar is scaled within its own range
+                    so the comparison is honest.
                 </section>
 
                 <!-- 8 — Conclusion (full text) -->
-                <section class="step" data-active-index="8">
-                    <div class="title">Meditation lowers reported stress after a single session</div>
-                    Alessandro Sparacio and several collaborators ran a 37 site study with over 2,200 participants to study how meditation
-                    affects how people report their levels of stress. The control group listened to a chapter from an audio book while the other groups practiced a guided
-                    meditation in one of three therapeutic meditation practices.<br><br> 
-                    “All exercises proved to be more efficacious than the active control. We observed a mean difference 
-                    of 0.27 (d = −0.56; 95% CI −0.43 to −0.69) between the control condition (M = 1.95, SD = 0.50) 
-                    and the condition with the largest stress reduction (body scan: M = 1.68, SD = 0.46).<br>
-Our findings suggest that mindfulness may be beneficial for reducing self-reported short-term stress for English speakers from higher-income countries.” 
-<a href = https://osf.io/6w2zm/wiki?wiki=g7zf4>Self-Administered Mindfulness Interventions Reduce Stress in a Large, Randomized Controlled Multi-Site Study.</a>
+                <section class="step" data-active-index="8" data-layout="full-text">
+                    <div class="title">The honest conclusion</div>
+                    The data supports a measured claim, not a miracle. Meditation has strong, replicated benefits for
+                    <b>attention</b> and for the <b>stress mechanisms</b> that erode sleep — expert meditators show far
+                    less mind-wandering (0.32 vs 0.40 in novices). But within-session physiological effects like heart
+                    rate are inconsistent and technique-dependent. Meditation works best as <b>one practice among
+                    several</b> — paired with sleep hygiene, activity, and care — not as a standalone cure.
                 </section>
 
                 <!-- 9 — Sources (full text) -->
-                <section class="step" data-active-index="9">
-                    <div class="title">Body Scans lowered stress more than the control</div>
-                    The participants were randomly organized into different groups, one for control and the others into different
-                    meditative exercises. They completed the exercises once and were asked to report their current stress levels
-                    to their stress before the experiment. While 17% of the control group reported to have reduce stress into the lowest range (20-29),
-                    35% of body scan group reported in the lowest range. This shows that 
-
+                <section class="step" data-active-index="9" data-layout="full-text" id="sources">
+                    <div class="title">Sources</div>
+                    <div style="font-size:0.95em; line-height:1.8;">
+                        <b>Definitions &amp; background</b><br />
+                        1. <i>Oxford English Dictionary</i>, "meditate." Oxford University Press.
+                        en.oxforddictionaries.com/definition/meditate<br />
+                        2. University of Oxford, Faculty of Asian and Middle Eastern Studies — Pāli &amp; the
+                        Theravāda tradition. ames.ox.ac.uk/pali<br />
+                        3. UMass Memorial Health — Center for Mindfulness (MBSR / MBCT; Jon Kabat-Zinn).
+                        ummhealth.org/services-treatments/center-mindfulness<br /><br />
+                        <b>Data</b><br />
+                        A. OpenNeuro ds001787 — EEG meditation study (expert vs. novice).<br />
+                        B. ClinicalTrials.gov — meditation trials by condition.<br />
+                        C. PhysioNet — Heart Rate Oscillations during Meditation v1.0.0.<br />
+                        D. Kaggle — Sleep Health and Lifestyle Dataset (cleaned).<br />
+                        E. Kaggle — Meditation Techniques Dataset (cleaned).<br /><br />
+                        <b>Peer-reviewed literature</b><br />
+                        i. Peng C-K, Mietus JE, Liu Y, Khalsa G, Douglas PS, Benson H, Goldberger AL.
+                        "Exaggerated Heart Rate Oscillations During Two Meditation Techniques."
+                        <i>International Journal of Cardiology</i> 70(2):101&ndash;107 (1999).<br />
+                        ii. Levine GN, Lange RA, Bairey-Merz CN, et al. "Meditation and Cardiovascular Risk
+                        Reduction: A Scientific Statement From the American Heart Association."
+                        <i>Journal of the American Heart Association</i> 6(10):e002218 (2017).<br />
+                        iii. Brown L, et al. "The Effects of Mindfulness and Meditation on Vagally-Mediated
+                        Heart Rate Variability: A Meta-Analysis." (2021).<br /><br />
+                        All figures generated from the cleaned CSVs documented in the project Data Dictionary.
+                    </div>
                 </section>
 
                 <!-- 10 — Authors (full text) -->
@@ -391,29 +408,6 @@ Our findings suggest that mindfulness may be beneficial for reducing self-report
                         </div>
                     </div>
                 </section>
-<section class="step" data-active-index="11" data-layout="full-text" id="sources">
-                    <div class="title">Sources</div>
-                    <div style="font-size:0.95em; line-height:1.8;">
-                        <b>Definitions &amp; background</b><br />
-                        1. <i>Oxford English Dictionary</i>, "meditate." Oxford University Press.
-                        en.oxforddictionaries.com/definition/meditate<br />
-                        2. University of Oxford, Faculty of Asian and Middle Eastern Studies — Pāli &amp; the
-                        Theravāda tradition. ames.ox.ac.uk/pali<br />
-                        3. UMass Memorial Health — Center for Mindfulness (MBSR / MBCT; Jon Kabat-Zinn).
-                        ummhealth.org/services-treatments/center-mindfulness<br /><br />
-                        <b>Data</b><br />
-                        A. OpenNeuro ds001787 — EEG meditation study (expert vs. novice).<br />
-                        B. ClinicalTrials.gov — meditation trials by condition.<br />
-                        C. PhysioNet — Heart Rate Oscillations during Meditation v1.0.0.<br />
-                        D. Kaggle — Sleep Health and Lifestyle Dataset (cleaned).<br />
-                        E. Kaggle — Meditation Techniques Dataset (cleaned).<br>
-                        F. Sparacio, A., IJzerman, H., Ropovik, I. et al. 
-                        Self-administered mindfulness interventions reduce stress in a large, randomized controlled multi-site study. 
-                        Nat Hum Behav 8, 1716–1725 (2024). https://doi.org/10.1038/s41562-024-01907-7 <br /><br />
-                        All figures generated from the cleaned CSVs documented in the project Data Dictionary.
-                    </div>
-                </section>
-
 
             </div>
             <div id='vis' class='vis-hidden'>
@@ -569,8 +563,6 @@ Our findings suggest that mindfulness may be beneficial for reducing self-report
     <script src="js/sketches/viz/viz_progress_color.js"></script>
     <script src="js/sketches/viz/viz_scatter.js"></script>
     <script src="js/sketches/viz/viz_bar.js"></script>
-    <script src="js/sketches/viz/viz_means_bar.js"></script>
-    <script src="js/sketches/viz/viz_histogram.js"></script>
     <script src="js/sketches/sketch_renderer.js"></script>
     <!-- heart-rate "two hearts diverging" (Canvas, section 4) -->
     <script src="js/hr_two_hearts.js"></script>
