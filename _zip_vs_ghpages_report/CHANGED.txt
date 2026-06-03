@@ -1,7 +1,0 @@
-index.html
-js/sketches/sketch_renderer.js
-js/sketches/viz/viz_bar.js
-js/sketches/viz/viz_chart_utils.js
-js/sketches/viz/viz_progress_color.js
-js/sketches/viz/viz_scatter.js
-js/sketches/viz/viz_title.js
