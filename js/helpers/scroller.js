@@ -1,7 +1,7 @@
 // scroller.js
 // Small Scroller abstraction (extracted from sections_p5.js) that computes
 // active step index and progress and exposes a lightweight .on(action, cb)
-(function () {
+(function() {
     function Scroller(containerSelector, stepSelector, trigger) {
         this.container = document.querySelector(containerSelector) || document.body;
         this.steps = Array.prototype.slice.call(document.querySelectorAll(stepSelector));
@@ -9,13 +9,13 @@
         this.sectionPositions = [];
         this.trigger = trigger || 'top'; // 'top' or 'center'
         this.currentIndex = -1;
-        this.onActive = function () { };
-        this.onProgress = function () { };
+        this.onActive = function() {};
+        this.onProgress = function() {};
 
         var self = this;
-        this.resize = function () {
+        this.resize = function() {
             self.sectionPositions = [];
-            self.steps.forEach(function (el) {
+            self.steps.forEach(function(el) {
                 // store absolute positions according to trigger type:
                 // - 'center' -> element vertical center
                 // - otherwise -> element top
@@ -30,7 +30,7 @@
             });
         };
 
-        this.position = function () {
+        this.position = function() {
             // Determine the Y coordinate (absolute page Y) at which we consider a step "active"
             var triggerY;
             if (self.trigger === 'center') {
@@ -75,10 +75,11 @@
 
         window.addEventListener('resize', this.resize);
         window.addEventListener('scroll', this.position);
-        setTimeout(function () { self.resize(); self.position(); }, 50);
+        setTimeout(function() { self.resize();
+            self.position(); }, 50);
     }
 
-    Scroller.prototype.on = function (action, cb) {
+    Scroller.prototype.on = function(action, cb) {
         if (action === 'active') this.onActive = cb;
         if (action === 'progress') this.onProgress = cb;
         return this;

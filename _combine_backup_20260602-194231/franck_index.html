@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Is mindfulness an effective treatment? — IMT 561</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <!-- Project spec: body copy in Times New Roman at 14px. Chart text sizes are
+         set centrally in js/sketches/viz/viz_chart_utils.js (TYPO). -->
+    <style>
+        /* ============================================================
+           THEME COLOR LIBRARY — single source of truth for the page.
+           Change a value here and it cascades everywhere that references
+           it via var(--name). Chart colors live in viz_chart_utils.js
+           (ChartUtils.PALETTE, Okabe–Ito) and the tree's own greens/bark
+           live in viz_title.js; those mirror the values below so the whole
+           experience stays visually consistent.
+           ============================================================ */
+        :root {
+            /* paper / ground */
+            --paper-top:    #FBFAF5;   /* lightest, top of the page gradient   */
+            --paper-mid:    #F6F4EC;   /* mid gradient stop                    */
+            --paper-bottom: #F1ECE0;   /* warm ground tone, bottom of gradient */
+            --paper-tint:   rgba(232,240,228,0.55); /* soft green sky glow top  */
+
+            /* text / ink */
+            --ink:          #1f2730;   /* primary body text                    */
+            --ink-title:    #16201b;   /* headings on the tree overlay         */
+            --ink-soft:     #5a6b60;   /* secondary / author text              */
+            --ink-muted:    #8a9b8e;   /* captions, scroll cue                 */
+
+            /* accents */
+            --accent-red:   #a8362c;   /* the science-crown annotation circle  */
+            --link:         #0072B2;   /* citations / source links             */
+
+            /* surfaces */
+            --header-bg:    rgba(251,250,245,0.82); /* frosted top bar          */
+            --panel-bg:     rgba(252,251,248,0.50); /* frosted text panel       */
+
+            /* drifting motes */
+            --mote:         120,140,110;            /* RGB triple for motes     */
+        }
+
+        /* ---- whole-site background: warm paper + soft vertical gradient ---- */
+        html, body {
+            background:
+                radial-gradient(120% 80% at 50% -10%, var(--paper-tint) 0%, rgba(252,251,248,0) 55%),
+                linear-gradient(180deg, var(--paper-top) 0%, var(--paper-mid) 55%, var(--paper-bottom) 100%);
+            background-attachment: fixed;
+        }
+        /* faint paper grain over the gradient */
+        body::before {
+            content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            opacity: 0.5;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+        }
+        /* drifting dust/light motes canvas, behind content, above background */
+        #motes { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+        /* let the tree canvas and header sit on the paper, not opaque white */
+        #vis { background: transparent !important; }
+        #site-header { background: var(--header-bg) !important; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+        #graphic, #sections, .container { position: relative; z-index: 2; }
+
+        #sections .step,
+        #sections .step .title,
+        #site-header { font-family: "Times New Roman", Times, serif; }
+        #sections .step { font-size: 14px; line-height: 1.65; color: var(--ink); }
+        #sections .step .title { font-family: "Times New Roman", Times, serif; font-size: 22px; }
+        .sources-link { color: var(--link); text-decoration: underline; font-weight: 700; }
+        sup .cite, .cite { color: var(--link); text-decoration: none; font-weight: 700; }
+        sup .cite:hover { text-decoration: underline; }
+
+        /* ---- opening title card (hero) ---- */
+        #hero {
+            position: fixed; inset: 0; z-index: 150;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 6vw;
+            pointer-events: none;             /* never blocks scrolling */
+        }
+        #hero-inner { max-width: 900px; }
+        #hero-title {
+            font-family: "Times New Roman", Times, serif;
+            font-size: clamp(28px, 4.4vw, 60px);
+            line-height: 1.18; color: var(--ink-title); font-weight: 700;
+            margin: 0 0 28px; letter-spacing: 0.2px;
+        }
+        #hero-authors {
+            font-family: "Times New Roman", Times, serif;
+            font-size: clamp(16px, 1.6vw, 22px); color: var(--ink-soft); font-style: italic;
+        }
+        #hero-scroll {
+            margin-top: 54px; font-family: "Times New Roman", Times, serif;
+            font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--ink-muted); animation: heroBob 2.2s ease-in-out infinite;
+        }
+        @keyframes heroBob { 0%,100% { transform: translateY(0); opacity:.7 } 50% { transform: translateY(6px); opacity:1 } }
+
+        /* ---- tree-overlay layout (intro sections 0–1): the tree animation is a
+               full-bleed BACKGROUND; the text is pinned over the quietest zone of
+               the frame for that section. Branches passing behind the words are
+               blurred (frosted glass) — nothing solid obscures the tree. ---- */
+        /* during the tree intro, let the trunk show softly THROUGH the header so
+           it appears to continue up past the screen instead of hitting a hard bar */
+        body:has(#graphic.layout-tree-overlay) #site-header {
+            background: rgba(255,255,255,0.45);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            border-bottom: none;
+        }
+        #graphic.layout-tree-overlay #vis {
+            /* span the FULL viewport so the trunk runs off-screen top & bottom
+               (into the header band and the section gap) instead of being clipped
+               inside the section box */
+            position: fixed;
+            left: 0; right: 0; top: 0; bottom: 0; height: 100vh; width: 100vw;
+            z-index: 40;
+        }
+        /* full-viewport readability tint for the tree sections: covers the whole
+           screen edge-to-edge (incl. the bare left gutter), sitting OVER the tree
+           but UNDER the text panels. Raise/lower the alpha to taste, or delete
+           this rule to remove the tint entirely. */
+        #graphic.layout-tree-overlay::after {
+            content: ""; position: fixed; inset: 0; z-index: 50;
+            background: rgba(246, 244, 236, 0.20);
+            pointer-events: none;
+        }
+        /* keep the scroll height of the steps but make them invisible space —
+           the visible text is the pinned panel below */
+        #graphic.layout-tree-overlay #sections {
+            width: 0; z-index: 60; pointer-events: none;
+        }
+        #graphic.layout-tree-overlay .step { pointer-events: none; color: transparent; }
+        #graphic.layout-tree-overlay .step .title { color: transparent; }
+
+        /* the active section's panel becomes a fixed, frosted text block */
+        #graphic.layout-tree-overlay .step .tree-panel {
+            position: fixed;
+            z-index: 70;
+            width: min(33vw, 460px);
+            padding: 20px 24px;
+            border-radius: 16px;
+            color: var(--ink);
+            pointer-events: auto;
+            opacity: 0;                       /* hidden unless its section is active */
+            transition: opacity .45s ease;
+            background: var(--panel-bg);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            text-shadow: 0 1px 2px rgba(255,255,255,0.75);
+        }
+        #graphic.layout-tree-overlay .step .tree-panel .title { color: var(--ink-title); }
+
+        /* SECTION 0 — trunk is growing, the TOP of the frame is empty:
+           text upper-left. */
+        #graphic.layout-tree-overlay .step[data-active-index="0"] .tree-panel {
+            left: 5vw; top: 14vh; bottom: auto;
+        }
+        /* SECTION 1 — the crown (circled in red) is the focus up top:
+           text drops to the LOWER-left so it clears the crown. Use an explicit
+           top so it never collides with an inherited top value. */
+        #graphic.layout-tree-overlay .step[data-active-index="1"] .tree-panel {
+            left: 5vw; top: 46vh; bottom: auto;
+        }
+        /* reveal only the active section's panel (others are dimmed to 0.1 by the scroller) */
+        #graphic.layout-tree-overlay .step[style*="opacity: 1"] .tree-panel {
+            opacity: 1;
+        }
+
+        /* ---- Heart-rate "two hearts diverging" ---- */
+        .two-hearts { width: min(92vw, 1100px); margin: 0 auto; font-family: "Times New Roman", Times, serif; }
+        .th-toggle { display: flex; gap: 0; justify-content: center; margin: 4px 0 22px;
+                     border: 1px solid var(--ink-muted, #8a9b8e); border-radius: 999px; width: max-content; margin-left: auto; margin-right: auto; overflow: hidden; }
+        .th-btn { font-family: "Times New Roman", Times, serif; font-size: 15px; cursor: pointer;
+                  border: none; background: transparent; padding: 9px 22px; color: var(--ink-soft, #5a6b60); transition: all .25s; }
+        .th-btn.th-active { background: var(--ink-title, #16201b); color: #fff; }
+        .th-stage { display: flex; align-items: center; justify-content: center; gap: 3vw; }
+        .th-heart { flex: 1 1 0; max-width: 520px; text-align: center; }
+        .th-vs { font-style: italic; color: var(--ink-muted, #8a9b8e); font-size: 17px; padding: 0 4px; }
+        .th-name { font-size: 17px; font-weight: 700; color: var(--ink-title, #16201b); margin-bottom: 4px; }
+        .th-sub { font-weight: 400; font-style: italic; color: var(--ink-muted, #8a9b8e); font-size: 13px; }
+        .th-canvas { display: block; width: 100%; }
+        .th-bpm { margin-top: 2px; }
+        .th-bpm-num { font-size: 34px; font-weight: 700; color: var(--ink-title, #16201b); }
+        .th-bpm-unit { font-size: 14px; color: var(--ink-muted, #8a9b8e); margin-left: 4px; }
+        .th-spark { display: block; width: 100%; height: 176px; margin-top: 2px; }
+        .th-caption { text-align: center; font-size: 15px; line-height: 1.6; color: var(--ink, #1f2730);
+                      max-width: 620px; margin: 18px auto 0; }
+        .th-note { text-align: center; font-size: 12px; line-height: 1.5; color: var(--ink-muted, #8a9b8e);
+                   max-width: 600px; margin: 12px auto 0; font-style: italic; }
+        /* ---- heart section: sticky hearts on one side, story scrolls past ---- */
+        /* This section lives inside the full-text layout's 800px centered column
+           (#graphic.layout-full-text #sections). Break OUT of that column to span
+           the real viewport ("full-bleed"), so the hearts + story have room and
+           the text never spills off the edge. */
+        .hr-scrolly { display: flex; align-items: flex-start; gap: 2.5vw;
+                      width: 94vw; margin-left: calc(50% - 47vw); margin-right: calc(50% - 47vw);
+                      box-sizing: border-box; }
+        .hr-graphic { position: sticky; top: 7vh; flex: 0 0 56%; min-width: 0; align-self: flex-start; }
+        .hr-graphic .two-hearts { width: 100%; }
+        /* the story column carries the narrative now, so hide the in-viz caption/note */
+        .hr-graphic .th-caption, .hr-graphic .th-note { display: none; }
+        .hr-story { flex: 1 1 0; min-width: 0; padding: 7vh 0 9vh; text-align: left; color: var(--ink, #1f2730); }
+        .hr-story .title { text-align: left; margin-bottom: 20px; font-size: 27px; }
+        .hr-story p { font-size: 18px; line-height: 1.72; margin: 0 0 22px; }
+        .hr-switch { margin: 28px 0; }
+        .hr-switch button { font-family: "Times New Roman", Times, serif; font-size: 17px; cursor: pointer;
+                      color: #fff; background: var(--ink-title, #16201b); border: none;
+                      padding: 12px 24px; border-radius: 999px; transition: opacity .2s, transform .2s; }
+        .hr-switch button:hover { opacity: .88; transform: translateY(-1px); }
+        .hr-story .hr-limit { font-size: 15px; line-height: 1.6; background: rgba(120,140,110,0.09);
+                      border-left: 3px solid var(--ink-muted, #8a9b8e); padding: 14px 16px; border-radius: 2px; }
+        .hr-story .hr-cite { font-size: 13px; line-height: 1.5; color: var(--ink-muted, #8a9b8e); margin-top: 18px; }
+        @media (max-width: 880px) {
+            .hr-scrolly { flex-direction: column; width: 92vw;
+                          margin-left: calc(50% - 46vw); margin-right: calc(50% - 46vw); }
+            .hr-graphic { position: static; flex-basis: auto; width: 100%; }
+            .hr-story { padding: 24px 0 0; }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="motes"></canvas>
+
+    <!-- OPENING TITLE CARD: full-screen hero; fades out as the user scrolls into the tree -->
+    <div id="hero">
+        <div id="hero-inner">
+            <h1 id="hero-title">Is mindfulness an effective treatment toward a healthier lifestyle?</h1>
+            <div id="hero-authors">Franck Kepnang &amp; Aaron Stern</div>
+            <div id="hero-scroll">scroll to begin</div>
+        </div>
+    </div>
+
+    <header id="site-header">
+        <span id="site-title">Is mindfulness an effective treatment?</span>
+        <span id="site-course">IMT 561 Data Visualization: Design and Development</span>
+        <span id="debug-state"></span>
+    </header>
+    <div class="container">
+        <div id='graphic'>
+            <div id='sections'>
+
+                <!-- spacer: gives the opening hero room to fade before the tree -->
+                <div id="hero-spacer" style="height: 62vh;"></div>
+
+                <!-- 0 — Tree intro: religious / pre-scientific forms (tree on right, copy left) -->
+                <section class="step" data-active-index="0" data-layout="tree-overlay">
+                    <div class="tree-panel">
+                    <div class="title">Meditation is older than medicine</div>
+                    Long before it entered the clinic, meditation was a devotional discipline. The word itself
+                    descends from the Latin <i>meditārī</i> — "to think over, to reflect upon"<sup><a class="cite"
+                    href="#sources">1</a></sup>. Across cultures, distinct contemplative forms took root:
+                    <b>Dhikr</b> in Islam, <b>Lectio Divina</b> in Christianity, <b>Hitbodedut</b> in Judaism,
+                    <b>Vipassanā</b> in the Pāli Buddhist tradition<sup><a class="cite" href="#sources">2</a></sup>,
+                    <b>Prāṇāyāma</b> in Hinduism, and <b>Neidan</b> in Daoism.
+                    <br /><br />
+                    These practices share a single root — the deliberate turning of attention inward — but their
+                    purpose was spiritual, not therapeutic. None were designed to be measured. Scroll to grow the
+                    tree from these roots, then climb toward its modern crown.
+                    </div>
+                </section>
+
+                <!-- 1 — Tree intro: science-based crown (red circle highlights the top) -->
+                <section class="step" data-active-index="1" data-layout="tree-overlay">
+                    <div class="tree-panel">
+                    <div class="title">Then science began to ask</div>
+                    Beginning in the late twentieth century, clinicians took the oldest of these techniques and
+                    subjected it to measurement. <b>Mindfulness</b> — adapted from the Theravāda Buddhist tradition
+                    and standardized as Mindfulness-Based Stress Reduction (MBSR) and Mindfulness-Based Cognitive
+                    Therapy (MBCT) at the UMass Center for Mindfulness — became the most-studied form<sup><a
+                    class="cite" href="#sources">3</a></sup>. Its core instruction is deceptively simple: observe
+                    your thoughts without attaching judgment.
+                    <br /><br />
+                    At the crown of the tree, circled in red, the question itself changes. No longer <i>is this
+                    sacred?</i> but <i>does it work, and how would we know?</i>
+                    <br /><br />
+                    To find out, we looked at the evidence three ways: 2,411 clinical trials, physiological heart
+                    rate data recorded during meditation sessions, and health surveys from 374 participants.
+                    <br /><br />
+                    <a class="sources-link" href="#sources">View all sources →</a>
+                    </div>
+                </section>
+
+                <!-- 2 — Meditation-Based Studies by condition (single color) -->
+                <section class="step" data-active-index="2">
+                    <div class="title">What is meditation studied for?</div>
+                    To map where clinical attention has concentrated, we aggregated 2,411 meditation trials
+                    registered on ClinicalTrials.gov<sup><a class="cite" href="#sources">B</a></sup> and grouped them
+                    by primary condition, combining mindfulness and other meditation traditions into a single
+                    category. Each bar reports the total number of registered trials for that condition.
+                    <br /><br />
+                    The distribution is concentrated in psychological and stress-related conditions:
+                    <b>chronic pain</b>, <b>stress and burnout</b>, and <b>depression</b> account for the largest
+                    share of trials, while <b>anxiety</b> and <b>neurological or cognitive</b> conditions are studied
+                    far less often. This reflects where meditation has been positioned as a candidate intervention,
+                    not where it has been proven effective. Trial volume measures research interest; it does not, on
+                    its own, establish clinical benefit.
+                </section>
+
+                <!-- 3 — Bridge (full text) -->
+                <section class="step" data-active-index="3" data-layout="full-text">
+                    <div class="title">But volume isn't proof</div>
+                    Thousands of trials tell us meditation is <i>studied</i> — not that it <i>works</i>. To judge that,
+                    we look inside the body. We start with a classic physiological question, and the data turns out to
+                    tell more than one story.
+                </section>
+
+                <!-- 4 — Heart-rate STORY CAROUSEL (HTML / Chart.js, no p5 viz) -->
+                <section class="step" data-active-index="4" data-layout="full-text">
+                    <div class="hr-scrolly">
+                        <div class="hr-graphic">
+                            <div class="two-hearts" id="hrTwoHearts"></div>
+                        </div>
+                        <div class="hr-story">
+                            <div class="title">What can a heartbeat tell us about meditation?</div>
+                            <p>Before anyone meditates, the two hearts are simply at rest &mdash; and already very different. The chi practitioner sits near <b>81</b> beats per minute; the kundalini practitioner is much calmer, around <b>61</b>. Steady and predictable, nothing dramatic.</p>
+                            <div class="hr-switch">
+                                <button id="hrToDuring" type="button">&#9654;&nbsp; Start the meditation</button>
+                            </div>
+                            <p>Now they meditate &mdash; and head in opposite directions. The chi practitioner&rsquo;s heart eases down a little. The kundalini practitioner&rsquo;s races <i>upward</i>, past <b>90</b>, driven by fast, forceful breathing. Same word, &ldquo;meditation,&rdquo; two opposite effects on the body.</p>
+                            <p>So meditation isn&rsquo;t one thing. The quiet, mindful kind can gently lower your heart rate; the active kind winds it up. Both are useful for the right goal &mdash; which is why mindfulness works best as a <b>complement</b> to a healthy routine, not a cure on its own.</p>
+                            <p class="hr-limit"><b>One caveat:</b> this is a small study &mdash; 8 chi and 4 kundalini practitioners &mdash; and each heart here is a single person. It shows the pattern clearly, but treat the exact numbers as a hint, not proof.</p>
+                            <p class="hr-cite">Source: Peng et&nbsp;al., &ldquo;Exaggerated Heart Rate Oscillations During Two Meditation Techniques,&rdquo; <i>Int. J. Cardiol.</i> (1999). See <a class="sources-link" href="#sources">Sources</a> for full references.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5 — Bridge (full text) -->
+                <section class="step" data-active-index="5" data-layout="full-text">
+                    <div class="title">So where does meditation clearly help?</div>
+                    The physiological picture is mixed. The stronger case lives one step upstream — in <b>stress</b>,
+                    and the damage chronic stress does to sleep. This is the mechanism meditation is best positioned to
+                    interrupt.
+                </section>
+
+                <!-- 6 — Stress x sleep scatter -->
+                <section class="step" data-active-index="6">
+                    <div class="title">Stress and sleep move together</div>
+                    Across 374 individuals, stress and sleep quality are strongly, negatively linked
+                    (<b>r = −0.90</b>). As reported stress climbs, sleep quality collapses. Color marks who carries a
+                    diagnosed sleep disorder — they cluster exactly where you'd expect.
+                </section>
+
+                <!-- 7 — Stress tiers -->
+                <section class="step" data-active-index="7">
+                    <div class="title">High stress, worse on every axis</div>
+                    Group people into low, mid, and high stress and the pattern holds across metrics: low-stress
+                    individuals average <b>8.3</b> sleep quality and <b>67 BPM</b> resting heart rate; high-stress
+                    individuals fall to <b>5.9</b> and rise to <b>74 BPM</b>. Each bar is scaled within its own range
+                    so the comparison is honest.
+                </section>
+
+                <!-- 8 — Conclusion (full text) -->
+                <section class="step" data-active-index="8" data-layout="full-text">
+                    <div class="title">The honest conclusion</div>
+                    The data supports a measured claim, not a miracle. Meditation has strong, replicated benefits for
+                    <b>attention</b> and for the <b>stress mechanisms</b> that erode sleep — expert meditators show far
+                    less mind-wandering (0.32 vs 0.40 in novices). But within-session physiological effects like heart
+                    rate are inconsistent and technique-dependent. Meditation works best as <b>one practice among
+                    several</b> — paired with sleep hygiene, activity, and care — not as a standalone cure.
+                </section>
+
+                <!-- 9 — Sources (full text) -->
+                <section class="step" data-active-index="9" data-layout="full-text" id="sources">
+                    <div class="title">Sources</div>
+                    <div style="font-size:0.95em; line-height:1.8;">
+                        <b>Definitions &amp; background</b><br />
+                        1. <i>Oxford English Dictionary</i>, "meditate." Oxford University Press.
+                        en.oxforddictionaries.com/definition/meditate<br />
+                        2. University of Oxford, Faculty of Asian and Middle Eastern Studies — Pāli &amp; the
+                        Theravāda tradition. ames.ox.ac.uk/pali<br />
+                        3. UMass Memorial Health — Center for Mindfulness (MBSR / MBCT; Jon Kabat-Zinn).
+                        ummhealth.org/services-treatments/center-mindfulness<br /><br />
+                        <b>Data</b><br />
+                        A. OpenNeuro ds001787 — EEG meditation study (expert vs. novice).<br />
+                        B. ClinicalTrials.gov — meditation trials by condition.<br />
+                        C. PhysioNet — Heart Rate Oscillations during Meditation v1.0.0.<br />
+                        D. Kaggle — Sleep Health and Lifestyle Dataset (cleaned).<br />
+                        E. Kaggle — Meditation Techniques Dataset (cleaned).<br /><br />
+                        <b>Peer-reviewed literature</b><br />
+                        i. Peng C-K, Mietus JE, Liu Y, Khalsa G, Douglas PS, Benson H, Goldberger AL.
+                        "Exaggerated Heart Rate Oscillations During Two Meditation Techniques."
+                        <i>International Journal of Cardiology</i> 70(2):101&ndash;107 (1999).<br />
+                        ii. Levine GN, Lange RA, Bairey-Merz CN, et al. "Meditation and Cardiovascular Risk
+                        Reduction: A Scientific Statement From the American Heart Association."
+                        <i>Journal of the American Heart Association</i> 6(10):e002218 (2017).<br />
+                        iii. Brown L, et al. "The Effects of Mindfulness and Meditation on Vagally-Mediated
+                        Heart Rate Variability: A Meta-Analysis." (2021).<br /><br />
+                        All figures generated from the cleaned CSVs documented in the project Data Dictionary.
+                    </div>
+                </section>
+
+                <!-- 10 — Authors (full text) -->
+                <section class="step author-section" data-active-index="10" data-layout="full-text">
+                    <div class="title">About the Authors</div>
+                    <div class="authors">
+                        <div class="author">
+                            <div class="author-name">Franck Kepnang</div>
+                            <div class="author-bio">MSIM candidate, University of Washington. Interested in data
+                                storytelling and health informatics.</div>
+                        </div>
+                        <div class="author">
+                            <div class="author-name">Aaron Stern</div>
+                            <div class="author-bio">MSIM candidate, University of Washington. Interested in interactive
+                                visualization and evidence communication.</div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+            <div id='vis' class='vis-hidden'>
+            </div>
+            <div id="extra-space">
+            </div>
+        </div>
+    </div>
+
+    <!-- show the visualization from the very first section -->
+    <script>window.ScrollDemoConfig = { showAt: 0 };</script>
+
+    <!-- Background: drifting dust/light motes + opening hero fade-on-scroll -->
+    <script>
+    (function () {
+        // ============================================================
+        //  FALLING-LEAVES ANIMATION  —  EASY ON / OFF SWITCH
+        //  true  = leaves drift down and settle into the bar chart
+        //  false = no falling leaves at all
+        var LEAVES_ENABLED = false;
+        // ============================================================
+
+        // ---- drifting dust/light motes ----
+        var cv = document.getElementById('motes'), ctx = cv.getContext('2d');
+        // pull the mote color from the central CSS theme palette (--mote)
+        var MOTE_RGB = (getComputedStyle(document.documentElement)
+            .getPropertyValue('--mote').trim() || '120,140,110');
+        var motes = [], DPR = Math.min(2, window.devicePixelRatio || 1);
+        function resize() {
+            cv.width = innerWidth * DPR; cv.height = innerHeight * DPR;
+            cv.style.width = innerWidth + 'px'; cv.style.height = innerHeight + 'px';
+            ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+            var n = Math.round((innerWidth * innerHeight) / 42000);  // density
+            motes = [];
+            for (var i = 0; i < n; i++) motes.push(newMote(true));
+        }
+        function newMote(anywhere) {
+            return {
+                x: Math.random() * innerWidth,
+                y: anywhere ? Math.random() * innerHeight : innerHeight + 10,
+                r: 0.6 + Math.random() * 2.2,
+                vx: (Math.random() - 0.5) * 0.12,
+                vy: -(0.08 + Math.random() * 0.28),     // gentle upward drift
+                a: 0.06 + Math.random() * 0.20,
+                tw: Math.random() * Math.PI * 2          // twinkle phase
+            };
+        }
+        // ---- full-page falling leaves that land in the bar chart ----
+        // The bar chart (viz_bar.js) publishes its bar rects (page coords) to
+        // window.__leafTargets each frame. Leaves spawn at the TOP of the whole
+        // screen, fall through the page background, and settle into those bars —
+        // so the fall reads as coming from above the page, not just the chart.
+        var FALL = [[196,86,42],[214,142,48],[168,58,40],[138,110,52],[122,142,66]];
+        var leaves = [];
+        function spawnLeaf(targets) {
+            var bar = targets[Math.floor(Math.random() * targets.length)];
+            if (!bar || bar.w < 6) return;
+            var landX = bar.x + Math.random() * bar.w;
+            var landY = bar.y + bar.h * (0.3 + Math.random() * 0.4);
+            leaves.push({
+                x: Math.random() * innerWidth,        // enter from anywhere across the top
+                y: -20 - Math.random() * 80,
+                tx: landX, ty: landY,
+                vy: 0.65 + Math.random() * 0.85, sway: Math.random() * 6.28,
+                rot: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.08,
+                swayAmp: 0.7 + Math.random() * 0.8,    // per-leaf sway width
+                size: 7 + Math.random() * 7,
+                col: FALL[Math.floor(Math.random() * FALL.length)], life: 0
+            });
+        }
+        function leafTick() {
+            if (!LEAVES_ENABLED) { if (leaves.length) leaves.length = 0; return; }
+            var lt = window.__leafTargets;
+            var fresh = lt && (( (window.performance?performance.now():Date.now()) - (lt.stamp||0)) < 250);
+            var live = fresh && lt.active && lt.bars && lt.bars.length;
+            // spawn while the chart is active & on-screen
+            if (live) {
+                var rate = lt.filling ? 3 : 1;          // brisk during fill, trickle when full
+                var cap = lt.filling ? 120 : 40;
+                if (leaves.length < cap && (lt.filling || (Math.random() < 0.4))) {
+                    for (var s = 0; s < rate; s++) spawnLeaf(lt.bars);
+                }
+            } else if (leaves.length) {
+                // user scrolled away from the bar section: stop spawning and clear
+                // the leaves quickly so they don't linger over other sections
+                leaves.length = 0;
+            }
+            for (var i = leaves.length - 1; i >= 0; i--) {
+                var lf = leaves[i];
+                lf.life++; lf.sway += 0.035; lf.rot += lf.vr;   // slower sway + spin
+                lf.y += lf.vy;
+                lf.x += Math.sin(lf.sway) * lf.swayAmp + (lf.tx - lf.x) * 0.006;  // gentle drift toward bar
+                var done = lf.y >= lf.ty;
+                if (done) { leaves.splice(i, 1); continue; }
+                var a = Math.min(1, lf.life / 10) * 0.92;
+                ctx.save();
+                ctx.translate(lf.x, lf.y); ctx.rotate(lf.rot);
+                ctx.fillStyle = 'rgba(' + lf.col[0] + ',' + lf.col[1] + ',' + lf.col[2] + ',' + a.toFixed(3) + ')';
+                ctx.beginPath(); ctx.ellipse(0, 0, lf.size, lf.size * 0.6, 0, 0, Math.PI * 2); ctx.fill();
+                ctx.strokeStyle = 'rgba(' + (lf.col[0]*0.6|0) + ',' + (lf.col[1]*0.6|0) + ',' + (lf.col[2]*0.55|0) + ',' + a.toFixed(3) + ')';
+                ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(-lf.size*0.4, 0); ctx.lineTo(lf.size*0.4, 0); ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        function tick(t) {
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            for (var i = 0; i < motes.length; i++) {
+                var m = motes[i];
+                m.x += m.vx; m.y += m.vy; m.tw += 0.02;
+                if (m.y < -10 || m.x < -10 || m.x > innerWidth + 10) motes[i] = newMote(false);
+                var alpha = m.a * (0.6 + 0.4 * Math.sin(m.tw));
+                ctx.beginPath();
+                ctx.fillStyle = 'rgba(' + MOTE_RGB + ',' + alpha.toFixed(3) + ')';
+                ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            leafTick();                 // falling leaves over the full page
+            requestAnimationFrame(tick);
+        }
+        resize(); addEventListener('resize', resize); requestAnimationFrame(tick);
+
+        // ---- opening hero: fade + lift out as the user scrolls into the tree ----
+        var hero = document.getElementById('hero');
+        function onScroll() {
+            var h = innerHeight;
+            var p = Math.min(1, scrollY / (h * 0.32));   // fully gone by ~0.32 viewport, before the first panel
+            hero.style.opacity = (1 - p).toFixed(3);
+            hero.style.transform = 'translateY(' + (-p * 60).toFixed(1) + 'px)';
+            hero.style.display = p >= 1 ? 'none' : 'flex';
+        }
+        addEventListener('scroll', onScroll, { passive: true }); onScroll();
+    })();
+    </script>
+    <!-- p5.js (using CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.min.js"></script>
+    <!-- Chart.js for the heart-rate carousel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <!-- helpers (data/loading, scroller, visual controller) -->
+    <script src="js/helpers/data_loader.js"></script>
+    <script src="js/helpers/scroller.js"></script>
+    <script src="js/helpers/visual_controller.js"></script>
+    <!-- orchestrator (wires scroller -> sketch) -->
+    <script src="js/helpers/sections.js"></script>
+    <!-- sketches (manager) -->
+    <script src="js/sketches/sketch_manager.js"></script>
+    <!-- sketches (example renderer) -->
+    <script src="js/sketches/examples/sketch_grid.js"></script>
+    <!-- shared chart utilities (load before viz modules) -->
+    <script src="js/sketches/viz/viz_chart_utils.js"></script>
+    <!-- sketches (renderers) -->
+    <script src="js/sketches/viz/viz_title.js"></script>
+    <script src="js/sketches/viz/viz_progress_color.js"></script>
+    <script src="js/sketches/viz/viz_scatter.js"></script>
+    <script src="js/sketches/viz/viz_bar.js"></script>
+    <script src="js/sketches/sketch_renderer.js"></script>
+    <!-- heart-rate "two hearts diverging" (Canvas, section 4) -->
+    <script src="js/hr_two_hearts.js"></script>
+
+</body>
+
+</html>
