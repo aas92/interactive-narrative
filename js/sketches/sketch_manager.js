@@ -23,9 +23,9 @@ function startP5() {
                 margin = { top: 0, left: 0, bottom: 0, right: 0 };
                 return { width: Math.round(window.innerWidth), height: Math.round(window.innerHeight), margin: margin };
             }
-            var rawW = isFullViz
-                ? Math.round(window.innerWidth) - 40
-                : Math.round(window.innerWidth * 0.70) - 60;
+            var rawW = isFullViz ?
+                Math.round(window.innerWidth) - 40 :
+                Math.round(window.innerWidth * 0.70) - 60;
             var availW = rawW - margin.left - margin.right;
             var wFromHeight = Math.round((window.innerHeight - 120) * (600 / 520)) - margin.left - margin.right;
             w = Math.min(availW, wFromHeight);
@@ -43,15 +43,22 @@ function startP5() {
         this.canvasHeight = this.height + this.margin.top + this.margin.bottom;
 
         // drawing state
-        this.state = { activeIndex: 0, progress: 0 };
+        //   progress        = raw target from the scroller (jumps with the scroll)
+        //   displayProgress = eased value the visualizations actually read; it is
+        //                     chased toward `progress` once per frame inside p.draw()
+        this.state = { activeIndex: 0, progress: 0, displayProgress: 0 };
+
+        // How quickly displayProgress catches up to the raw scroll target.
+        // Higher = snappier, lower = floatier. ~0.15 at 30fps feels smooth.
+        this.progressSmoothing = 0.15;
 
         // data will be attached by localRenderer.setData(manager, data)
         this.data = [];
 
         // create the p5 instance bound to this manager
         var self = this;
-        var sketch = function (p) {
-            p.setup = function () {
+        var sketch = function(p) {
+            p.setup = function() {
                 var parent = document.getElementById('vis');
                 parent.innerHTML = '';
                 p.createCanvas(self.canvasWidth, self.canvasHeight).parent('vis');
@@ -59,7 +66,7 @@ function startP5() {
                 p.frameRate(30);
             };
 
-            p.windowResized = function () {
+            p.windowResized = function() {
                 var s = getVisSize();
                 self.width = s.width;
                 self.height = s.height;
@@ -71,7 +78,18 @@ function startP5() {
                 p.resizeCanvas(self.canvasWidth, self.canvasHeight);
             };
 
-            p.draw = function () {
+            p.draw = function() {
+                // --- ease the scroll progress every frame -------------------
+                // The scroller reports a raw target that jumps with the wheel.
+                // We chase it here so every visualization animates smoothly and
+                // keeps settling for a few frames after the scroll stops.
+                var target = self.state.progress || 0;
+                var dp = self.state.displayProgress;
+                if (dp === undefined) dp = target;
+                dp += (target - dp) * self.progressSmoothing;
+                if (Math.abs(target - dp) < 0.0005) dp = target; // snap when settled
+                self.state.displayProgress = dp;
+
                 // Always clear to transparent so the warm-paper page background
                 // shows through the chart canvas — this keeps the #vis chart canvas
                 // and the full-page #motes/leaf canvas on the SAME background, with
@@ -80,10 +98,11 @@ function startP5() {
                 self.draw(p);
 
                 // scroll in/out transition using progress
-                var pr = self.state.progress || 0;
+                var pr = self.state.displayProgress || 0;
                 var ease = 0.05;
                 var travel = 20;
                 var tx, op;
+
                 function smoothstep(t) { return t * t * (3 - 2 * t); }
                 if (pr < ease) {
                     var t = smoothstep(pr / ease);
@@ -119,26 +138,38 @@ function startP5() {
 
 
     // set visualization state (called by scroll logic)
-    SketchManager.prototype.setState = function (s) {
-        if (s.activeIndex !== undefined) this.state.activeIndex = s.activeIndex;
-        if (s.progress !== undefined) this.state.progress = s.progress;
+    SketchManager.prototype.setState = function(s) {
+        if (s.activeIndex !== undefined) {
+            // When the active section changes, flag the next progress value to be
+            // snapped (not eased) so the incoming section does not briefly inherit
+            // the previous section's progress and appear to animate backwards.
+            if (s.activeIndex !== this.state.activeIndex) this._snapProgress = true;
+            this.state.activeIndex = s.activeIndex;
+        }
+        if (s.progress !== undefined) {
+            this.state.progress = s.progress;
+            if (this._snapProgress) {
+                this.state.displayProgress = s.progress;
+                this._snapProgress = false;
+            }
+        }
     };
 
     // delegate data handling to localRenderer
-    SketchManager.prototype.setData = function (newData) {
+    SketchManager.prototype.setData = function(newData) {
         return localRenderer.setData(this, newData);
     };
 
     // simple drawing routine, split into helpers for clarity
-    SketchManager.prototype.draw = function (p) {
+    SketchManager.prototype.draw = function(p) {
         var ai = this.state.activeIndex || 0;
-        var progress = this.state.progress || 0;
+        var progress = this.state.displayProgress || 0;
         localRenderer.draw(p, this, ai, progress);
     };
 
     // create (or replace) singleton manager and expose API
     if (window.__sketchAPI && window.__sketchAPI.p5) {
-        try { window.__sketchAPI.p5.remove(); } catch (e) { }
+        try { window.__sketchAPI.p5.remove(); } catch (e) {}
         window.__sketchAPI = null;
     }
     var manager = new SketchManager();
@@ -158,17 +189,17 @@ function startP5() {
 
     // Expose a `ready` promise so callers can wait until data/layout are ready.
     if (setDataResult && typeof setDataResult.then === 'function') {
-        api.ready = setDataResult.then(function () { return api; });
+        api.ready = setDataResult.then(function() { return api; });
     } else {
         api.ready = Promise.resolve(api);
     }
 
     // Expose the API globally once ready so consumers (like sections) see
     // the populated data without racing the async load.
-    api.ready.then(function () {
-        try { window.__sketchAPI = api; } catch (e) { }
-    }).catch(function () {
-        try { window.__sketchAPI = api; } catch (e) { }
+    api.ready.then(function() {
+        try { window.__sketchAPI = api; } catch (e) {}
+    }).catch(function() {
+        try { window.__sketchAPI = api; } catch (e) {}
     });
 
     return api;
