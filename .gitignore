@@ -1,4 +1,7 @@
-# .gitignore_combine_backup_*/
 _zip_vs_ghpages_report/
 _aaron_recovery_review/
 *.sh
+_combine_backup_*/
+_cleanup_removed_*/
+*.bak
+*.bak-*

@@ -229,3 +229,1001 @@
 }
 
 
+
+
+/* ===================================================================== */
+/*  Moved here from the index.html inline <style> block on 20260603-185541     */
+/*  Kept at the end of the file so the cascade order is unchanged.        */
+/* ===================================================================== */
+         :root {
+            --paper-top: #FBFAF5;
+            --paper-mid: #F6F4EC;
+            --paper-bottom: #F1ECE0;
+            --paper-tint: rgba(232, 240, 228, 0.55);
+            --ink: #1f2730;
+            --ink-title: #16201b;
+            --ink-soft: #5a6b60;
+            --ink-muted: #8a9b8e;
+            --accent-red: #a8362c;
+            --link: #0072B2;
+            --header-bg: rgba(251, 250, 245, 0.82);
+            --panel-bg: rgba(252, 251, 248, 0.50);
+            --mote: 120, 140, 110;
+        }
+        
+        html,
+        body {
+            background: radial-gradient(120% 80% at 50% -10%, var(--paper-tint) 0%, rgba(252, 251, 248, 0) 55%), linear-gradient(180deg, var(--paper-top) 0%, var(--paper-mid) 55%, var(--paper-bottom) 100%);
+            background-attachment: fixed;
+            overflow-x: clip;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.5;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+        }
+        
+        #motes {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        #vis {
+            background: transparent !important;
+        }
+        
+        #site-header {
+            background: var(--header-bg) !important;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+        
+        #graphic,
+        #sections,
+        .container {
+            position: relative;
+            z-index: 2;
+        }
+        
+        #sections .step,
+        #sections .step .title,
+        #site-header {
+            font-family: "Times New Roman", Times, serif;
+        }
+        
+        #sections .step {
+            font-size: 14px;
+            line-height: 1.65;
+            color: var(--ink);
+        }
+        
+        #sections .step .title {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 22px;
+        }
+        
+        #sections .step[data-active-index="2"] {
+            font-size: 19px;
+        }
+        
+        #sections .step[data-active-index="3"] {
+            position: relative;
+            overflow: visible;
+            min-height: 100vh;
+            --grow: 1;
+            font-size: 20px;
+        }
+        
+        #sections .step[data-active-index="3"] .vp-roots {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            /* break out of the narrow centered text column to the full page width */
+            left: 50%;
+            width: 100vw;
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* veins draw in AND fade in together as the section enters - soft, no pop */
+        
+        #sections .step[data-active-index="3"] .vp-roots .vgroup {
+            opacity: calc(0.42 * var(--grow, 1));
+        }
+        
+        #sections .step[data-active-index="3"] .vp-roots .v {
+            stroke-dasharray: 1;
+            stroke-dashoffset: calc(1 - var(--grow, 1));
+        }
+        
+        #sections .step[data-active-index="3"] .vp-roots .vp-pulse {
+            opacity: calc(0.9 * var(--grow, 1));
+        }
+        
+        #sections .step[data-active-index="3"] .vp-text {
+            position: relative;
+            z-index: 1;
+        }
+        
+        #sections .step[data-active-index="3"] .vp-text .title {
+            font-size: 30px;
+        }
+        
+        .sources-link {
+            color: var(--link);
+            text-decoration: underline;
+            font-weight: 700;
+        }
+        
+        sup .cite,
+        .cite {
+            color: var(--link);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        
+        sup .cite:hover {
+            text-decoration: underline;
+        }
+        
+        #hero {
+            position: fixed;
+            inset: 0;
+            z-index: 150;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6vw;
+            pointer-events: none;
+        }
+        
+        #hero-inner {
+            max-width: 900px;
+        }
+        
+        #hero-title {
+            font-family: "Times New Roman", Times, serif;
+            font-size: clamp(28px, 4.4vw, 60px);
+            line-height: 1.18;
+            color: var(--ink-title);
+            font-weight: 700;
+            margin: 0 0 28px;
+            letter-spacing: 0.2px;
+        }
+        
+        #hero-authors {
+            font-family: "Times New Roman", Times, serif;
+            font-size: clamp(16px, 1.6vw, 22px);
+            color: var(--ink-soft);
+            font-style: italic;
+        }
+        
+        #hero-scroll {
+            margin-top: 54px;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 14px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            animation: heroBob 2.2s ease-in-out infinite;
+        }
+        
+        @keyframes heroBob {
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: .7
+            }
+            50% {
+                transform: translateY(6px);
+                opacity: 1
+            }
+        }
+        
+        body:has(#graphic.layout-tree-overlay) #site-header {
+            background: rgba(255, 255, 255, 0.45);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            border-bottom: none;
+        }
+        
+        #graphic.layout-tree-overlay #vis {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            height: 100vh;
+            width: 100vw;
+            z-index: 40;
+        }
+        /* tree intro: NO full-screen tint. The only wash is the zoom/dive wash that
+       js/sketches/viz/viz_title.js draws while plunging into the crown, so the
+       tree shows at full color until that moment. */
+        
+        #graphic.layout-tree-overlay #sections {
+            width: 0;
+            z-index: 60;
+            pointer-events: none;
+        }
+        
+        #graphic.layout-tree-overlay .step {
+            pointer-events: none;
+            color: transparent;
+        }
+        
+        #graphic.layout-tree-overlay .step .title {
+            color: transparent;
+        }
+        
+        #graphic.layout-tree-overlay .step .tree-panel {
+            position: fixed;
+            z-index: 70;
+            width: min(460px, 88vw);
+            padding: 26px 30px;
+            border-radius: 16px;
+            color: #14181c;
+            font-size: 19.5px;
+            line-height: 1.78;
+            pointer-events: auto;
+            opacity: 0;
+            transition: opacity .45s ease;
+            background: rgba(252, 251, 248, 0.82);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.85);
+        }
+        
+        #graphic.layout-tree-overlay .step .tree-panel .title {
+            color: #10140d;
+            font-size: 29px;
+            line-height: 1.25;
+            margin-bottom: 12px;
+        }
+        /* SECTION 0 — centered in the viewport (vw/vh so an ancestor transform
+           can't re-anchor it off-screen). */
+        
+        #graphic.layout-tree-overlay .step[data-active-index="0"] .tree-panel {
+            left: 52vw;
+            top: 50vh;
+            bottom: auto;
+            transform: translate(-50%, -50%);
+        }
+        /* SECTION 1 — centered in the viewport, matching section 0. The crown
+           names are ringed around the crown's edges (in viz_title.js) so they
+           flank this panel instead of hiding behind it. */
+        
+        #graphic.layout-tree-overlay .step[data-active-index="1"] .tree-panel {
+            left: 52.5vw;
+            top: 50vh;
+            bottom: auto;
+            transform: translate(-50%, -50%);
+        }
+        
+        #graphic.layout-tree-overlay .step[style*="opacity: 1"] .tree-panel {
+            opacity: 1;
+        }
+        
+        .two-hearts {
+            width: min(92vw, 1100px);
+            margin: 0 auto;
+            font-family: "Times New Roman", Times, serif;
+        }
+        
+        .th-toggle {
+            display: flex;
+            gap: 0;
+            justify-content: center;
+            margin: 4px 0 22px;
+            border: 1px solid var(--ink-muted, #8a9b8e);
+            border-radius: 999px;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+        }
+        
+        .th-btn {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 15px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            padding: 9px 22px;
+            color: var(--ink-soft, #5a6b60);
+            transition: all .25s;
+        }
+        
+        .th-btn.th-active {
+            background: var(--ink-title, #16201b);
+            color: #fff;
+        }
+        
+        .th-stage {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3vw;
+        }
+        
+        .th-heart {
+            flex: 1 1 0;
+            max-width: 520px;
+            text-align: center;
+        }
+        
+        .th-vs {
+            font-style: italic;
+            color: var(--ink-muted, #8a9b8e);
+            font-size: 17px;
+            padding: 0 4px;
+        }
+        
+        .th-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--ink-title, #16201b);
+            margin-bottom: 4px;
+        }
+        
+        .th-sub {
+            font-weight: 400;
+            font-style: italic;
+            color: var(--ink-muted, #8a9b8e);
+            font-size: 13px;
+        }
+        
+        .th-canvas {
+            display: block;
+            width: 100%;
+        }
+        
+        .th-bpm {
+            margin-top: 2px;
+        }
+        
+        .th-bpm-num {
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--ink-title, #16201b);
+        }
+        
+        .th-bpm-unit {
+            font-size: 14px;
+            color: var(--ink-muted, #8a9b8e);
+            margin-left: 4px;
+        }
+        
+        .th-spark {
+            display: block;
+            width: 100%;
+            height: 176px;
+            margin-top: 2px;
+        }
+        
+        .th-caption {
+            text-align: center;
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--ink, #1f2730);
+            max-width: 620px;
+            margin: 18px auto 0;
+        }
+        
+        .th-note {
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--ink-muted, #8a9b8e);
+            max-width: 600px;
+            margin: 12px auto 0;
+            font-style: italic;
+        }
+        
+        .hr-scrolly {
+            display: flex;
+            align-items: flex-start;
+            gap: 2.5vw;
+            width: 94vw;
+            margin-left: calc(50% - 47vw);
+            margin-right: calc(50% - 47vw);
+            box-sizing: border-box;
+        }
+        
+        .hr-graphic {
+            position: sticky;
+            top: 7vh;
+            flex: 0 0 56%;
+            min-width: 0;
+            align-self: flex-start;
+        }
+        
+        .hr-graphic .two-hearts {
+            width: 100%;
+        }
+        
+        .hr-graphic .th-caption,
+        .hr-graphic .th-note {
+            display: none;
+        }
+        
+        .hr-story {
+            flex: 1 1 0;
+            min-width: 0;
+            padding: 7vh 0 9vh;
+            text-align: left;
+            color: var(--ink, #1f2730);
+        }
+        
+        .hr-story .title {
+            text-align: left;
+            margin-bottom: 20px;
+            font-size: 27px;
+        }
+        
+        .hr-story p {
+            font-size: 18px;
+            line-height: 1.72;
+            margin: 0 0 22px;
+        }
+        
+        .hr-switch {
+            margin: 28px 0;
+        }
+        
+        .hr-switch button {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 17px;
+            cursor: pointer;
+            color: #fff;
+            background: var(--ink-title, #16201b);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 999px;
+            transition: opacity .2s, transform .2s;
+        }
+        
+        .hr-switch button:hover {
+            opacity: .88;
+            transform: translateY(-1px);
+        }
+        
+        .hr-story .hr-limit {
+            font-size: 15px;
+            line-height: 1.6;
+            background: rgba(120, 140, 110, 0.09);
+            border-left: 3px solid var(--ink-muted, #8a9b8e);
+            padding: 14px 16px;
+            border-radius: 2px;
+        }
+        
+        .hr-story .hr-cite {
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--ink-muted, #8a9b8e);
+            margin-top: 18px;
+        }
+        
+        @media (max-width: 880px) {
+            .hr-scrolly {
+                flex-direction: column;
+                width: 92vw;
+                margin-left: calc(50% - 46vw);
+                margin-right: calc(50% - 46vw);
+            }
+            .hr-graphic {
+                position: static;
+                flex-basis: auto;
+                width: 100%;
+            }
+            .hr-story {
+                padding: 24px 0 0;
+            }
+        }
+
+
+/* ===================================================================== */
+/*  Moved here from the index.html inline <style> block on 20260603-185758     */
+/*  Kept at the end of the file so the cascade order is unchanged.        */
+/* ===================================================================== */
+         :root {
+            --paper-top: #FBFAF5;
+            --paper-mid: #F6F4EC;
+            --paper-bottom: #F1ECE0;
+            --paper-tint: rgba(232, 240, 228, 0.55);
+            --ink: #1f2730;
+            --ink-title: #16201b;
+            --ink-soft: #5a6b60;
+            --ink-muted: #8a9b8e;
+            --accent-red: #a8362c;
+            --link: #0072B2;
+            --header-bg: rgba(251, 250, 245, 0.82);
+            --panel-bg: rgba(252, 251, 248, 0.50);
+            --mote: 120, 140, 110;
+        }
+        
+        html,
+        body {
+            background: radial-gradient(120% 80% at 50% -10%, var(--paper-tint) 0%, rgba(252, 251, 248, 0) 55%), linear-gradient(180deg, var(--paper-top) 0%, var(--paper-mid) 55%, var(--paper-bottom) 100%);
+            background-attachment: fixed;
+            overflow-x: clip;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.5;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+        }
+        
+        #motes {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        #vis {
+            background: transparent !important;
+        }
+        
+        #site-header {
+            background: var(--header-bg) !important;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+        
+        #graphic,
+        #sections,
+        .container {
+            position: relative;
+            z-index: 2;
+        }
+        
+        #sections .step,
+        #sections .step .title,
+        #site-header {
+            font-family: "Times New Roman", Times, serif;
+        }
+        
+        #sections .step {
+            font-size: 14px;
+            line-height: 1.65;
+            color: var(--ink);
+        }
+        
+        #sections .step .title {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 22px;
+        }
+        
+        #sections .step[data-active-index="2"] {
+            font-size: 19px;
+        }
+        
+        #sections .step[data-active-index="3"] {
+            position: relative;
+            overflow: visible;
+            min-height: 100vh;
+            --grow: 1;
+            font-size: 20px;
+        }
+        
+        #sections .step[data-active-index="3"] .vp-roots {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            /* break out of the narrow centered text column to the full page width */
+            left: 50%;
+            width: 100vw;
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* veins draw in AND fade in together as the section enters - soft, no pop */
+        
+        #sections .step[data-active-index="3"] .vp-roots .vgroup {
+            opacity: calc(0.42 * var(--grow, 1));
+        }
+        
+        #sections .step[data-active-index="3"] .vp-roots .v {
+            stroke-dasharray: 1;
+            stroke-dashoffset: calc(1 - var(--grow, 1));
+        }
+        
+        #sections .step[data-active-index="3"] .vp-roots .vp-pulse {
+            opacity: calc(0.9 * var(--grow, 1));
+        }
+        
+        #sections .step[data-active-index="3"] .vp-text {
+            position: relative;
+            z-index: 1;
+        }
+        
+        #sections .step[data-active-index="3"] .vp-text .title {
+            font-size: 30px;
+        }
+        
+        .sources-link {
+            color: var(--link);
+            text-decoration: underline;
+            font-weight: 700;
+        }
+        
+        sup .cite,
+        .cite {
+            color: var(--link);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        
+        sup .cite:hover {
+            text-decoration: underline;
+        }
+        
+        #hero {
+            position: fixed;
+            inset: 0;
+            z-index: 150;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6vw;
+            pointer-events: none;
+        }
+        
+        #hero-inner {
+            max-width: 900px;
+        }
+        
+        #hero-title {
+            font-family: "Times New Roman", Times, serif;
+            font-size: clamp(28px, 4.4vw, 60px);
+            line-height: 1.18;
+            color: var(--ink-title);
+            font-weight: 700;
+            margin: 0 0 28px;
+            letter-spacing: 0.2px;
+        }
+        
+        #hero-authors {
+            font-family: "Times New Roman", Times, serif;
+            font-size: clamp(16px, 1.6vw, 22px);
+            color: var(--ink-soft);
+            font-style: italic;
+        }
+        
+        #hero-scroll {
+            margin-top: 54px;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 14px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            animation: heroBob 2.2s ease-in-out infinite;
+        }
+        
+        @keyframes heroBob {
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: .7
+            }
+            50% {
+                transform: translateY(6px);
+                opacity: 1
+            }
+        }
+        
+        body:has(#graphic.layout-tree-overlay) #site-header {
+            background: rgba(255, 255, 255, 0.45);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            border-bottom: none;
+        }
+        
+        #graphic.layout-tree-overlay #vis {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            height: 100vh;
+            width: 100vw;
+            z-index: 40;
+        }
+        /* tree intro: NO full-screen tint. The only wash is the zoom/dive wash that
+       js/sketches/viz/viz_title.js draws while plunging into the crown, so the
+       tree shows at full color until that moment. */
+        
+        #graphic.layout-tree-overlay #sections {
+            width: 0;
+            z-index: 60;
+            pointer-events: none;
+        }
+        
+        #graphic.layout-tree-overlay .step {
+            pointer-events: none;
+            color: transparent;
+        }
+        
+        #graphic.layout-tree-overlay .step .title {
+            color: transparent;
+        }
+        
+        #graphic.layout-tree-overlay .step .tree-panel {
+            position: fixed;
+            z-index: 70;
+            width: min(460px, 88vw);
+            padding: 26px 30px;
+            border-radius: 16px;
+            color: #14181c;
+            font-size: 19.5px;
+            line-height: 1.78;
+            pointer-events: auto;
+            opacity: 0;
+            transition: opacity .45s ease;
+            background: rgba(252, 251, 248, 0.82);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.85);
+        }
+        
+        #graphic.layout-tree-overlay .step .tree-panel .title {
+            color: #10140d;
+            font-size: 29px;
+            line-height: 1.25;
+            margin-bottom: 12px;
+        }
+        /* SECTION 0 — centered in the viewport (vw/vh so an ancestor transform
+           can't re-anchor it off-screen). */
+        
+        #graphic.layout-tree-overlay .step[data-active-index="0"] .tree-panel {
+            left: 52vw;
+            top: 50vh;
+            bottom: auto;
+            transform: translate(-50%, -50%);
+        }
+        /* SECTION 1 — centered in the viewport, matching section 0. The crown
+           names are ringed around the crown's edges (in viz_title.js) so they
+           flank this panel instead of hiding behind it. */
+        
+        #graphic.layout-tree-overlay .step[data-active-index="1"] .tree-panel {
+            left: 52.5vw;
+            top: 50vh;
+            bottom: auto;
+            transform: translate(-50%, -50%);
+        }
+        
+        #graphic.layout-tree-overlay .step[style*="opacity: 1"] .tree-panel {
+            opacity: 1;
+        }
+        
+        .two-hearts {
+            width: min(92vw, 1100px);
+            margin: 0 auto;
+            font-family: "Times New Roman", Times, serif;
+        }
+        
+        .th-toggle {
+            display: flex;
+            gap: 0;
+            justify-content: center;
+            margin: 4px 0 22px;
+            border: 1px solid var(--ink-muted, #8a9b8e);
+            border-radius: 999px;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+        }
+        
+        .th-btn {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 15px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            padding: 9px 22px;
+            color: var(--ink-soft, #5a6b60);
+            transition: all .25s;
+        }
+        
+        .th-btn.th-active {
+            background: var(--ink-title, #16201b);
+            color: #fff;
+        }
+        
+        .th-stage {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3vw;
+        }
+        
+        .th-heart {
+            flex: 1 1 0;
+            max-width: 520px;
+            text-align: center;
+        }
+        
+        .th-vs {
+            font-style: italic;
+            color: var(--ink-muted, #8a9b8e);
+            font-size: 17px;
+            padding: 0 4px;
+        }
+        
+        .th-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--ink-title, #16201b);
+            margin-bottom: 4px;
+        }
+        
+        .th-sub {
+            font-weight: 400;
+            font-style: italic;
+            color: var(--ink-muted, #8a9b8e);
+            font-size: 13px;
+        }
+        
+        .th-canvas {
+            display: block;
+            width: 100%;
+        }
+        
+        .th-bpm {
+            margin-top: 2px;
+        }
+        
+        .th-bpm-num {
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--ink-title, #16201b);
+        }
+        
+        .th-bpm-unit {
+            font-size: 14px;
+            color: var(--ink-muted, #8a9b8e);
+            margin-left: 4px;
+        }
+        
+        .th-spark {
+            display: block;
+            width: 100%;
+            height: 176px;
+            margin-top: 2px;
+        }
+        
+        .th-caption {
+            text-align: center;
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--ink, #1f2730);
+            max-width: 620px;
+            margin: 18px auto 0;
+        }
+        
+        .th-note {
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--ink-muted, #8a9b8e);
+            max-width: 600px;
+            margin: 12px auto 0;
+            font-style: italic;
+        }
+        
+        .hr-scrolly {
+            display: flex;
+            align-items: flex-start;
+            gap: 2.5vw;
+            width: 94vw;
+            margin-left: calc(50% - 47vw);
+            margin-right: calc(50% - 47vw);
+            box-sizing: border-box;
+        }
+        
+        .hr-graphic {
+            position: sticky;
+            top: 7vh;
+            flex: 0 0 56%;
+            min-width: 0;
+            align-self: flex-start;
+        }
+        
+        .hr-graphic .two-hearts {
+            width: 100%;
+        }
+        
+        .hr-graphic .th-caption,
+        .hr-graphic .th-note {
+            display: none;
+        }
+        
+        .hr-story {
+            flex: 1 1 0;
+            min-width: 0;
+            padding: 7vh 0 9vh;
+            text-align: left;
+            color: var(--ink, #1f2730);
+        }
+        
+        .hr-story .title {
+            text-align: left;
+            margin-bottom: 20px;
+            font-size: 27px;
+        }
+        
+        .hr-story p {
+            font-size: 18px;
+            line-height: 1.72;
+            margin: 0 0 22px;
+        }
+        
+        .hr-switch {
+            margin: 28px 0;
+        }
+        
+        .hr-switch button {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 17px;
+            cursor: pointer;
+            color: #fff;
+            background: var(--ink-title, #16201b);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 999px;
+            transition: opacity .2s, transform .2s;
+        }
+        
+        .hr-switch button:hover {
+            opacity: .88;
+            transform: translateY(-1px);
+        }
+        
+        .hr-story .hr-limit {
+            font-size: 15px;
+            line-height: 1.6;
+            background: rgba(120, 140, 110, 0.09);
+            border-left: 3px solid var(--ink-muted, #8a9b8e);
+            padding: 14px 16px;
+            border-radius: 2px;
+        }
+        
+        .hr-story .hr-cite {
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--ink-muted, #8a9b8e);
+            margin-top: 18px;
+        }
+        
+        @media (max-width: 880px) {
+            .hr-scrolly {
+                flex-direction: column;
+                width: 92vw;
+                margin-left: calc(50% - 46vw);
+                margin-right: calc(50% - 46vw);
+            }
+            .hr-graphic {
+                position: static;
+                flex-basis: auto;
+                width: 100%;
+            }
+            .hr-story {
+                padding: 24px 0 0;
+            }
+        }

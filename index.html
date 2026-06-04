@@ -7,457 +7,7 @@
     <title>Is mindfulness an effective treatment? — IMT 561</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <style>
-         :root {
-            --paper-top: #FBFAF5;
-            --paper-mid: #F6F4EC;
-            --paper-bottom: #F1ECE0;
-            --paper-tint: rgba(232, 240, 228, 0.55);
-            --ink: #1f2730;
-            --ink-title: #16201b;
-            --ink-soft: #5a6b60;
-            --ink-muted: #8a9b8e;
-            --accent-red: #a8362c;
-            --link: #0072B2;
-            --header-bg: rgba(251, 250, 245, 0.82);
-            --panel-bg: rgba(252, 251, 248, 0.50);
-            --mote: 120, 140, 110;
-        }
-        
-        html,
-        body {
-            background: radial-gradient(120% 80% at 50% -10%, var(--paper-tint) 0%, rgba(252, 251, 248, 0) 55%), linear-gradient(180deg, var(--paper-top) 0%, var(--paper-mid) 55%, var(--paper-bottom) 100%);
-            background-attachment: fixed;
-        }
-        
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.5;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-        }
-        
-        #motes {
-            position: fixed;
-            inset: 0;
-            z-index: 1;
-            pointer-events: none;
-        }
-        
-        #vis {
-            background: transparent !important;
-        }
-        
-        #site-header {
-            background: var(--header-bg) !important;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-        }
-        
-        #graphic,
-        #sections,
-        .container {
-            position: relative;
-            z-index: 2;
-        }
-        
-        #sections .step,
-        #sections .step .title,
-        #site-header {
-            font-family: "Times New Roman", Times, serif;
-        }
-        
-        #sections .step {
-            font-size: 14px;
-            line-height: 1.65;
-            color: var(--ink);
-        }
-        
-        #sections .step .title {
-            font-family: "Times New Roman", Times, serif;
-            font-size: 22px;
-        }
-        
-        #sections .step[data-active-index="2"] {
-            font-size: 19px;
-        }
-        
-        .sources-link {
-            color: var(--link);
-            text-decoration: underline;
-            font-weight: 700;
-        }
-        
-        sup .cite,
-        .cite {
-            color: var(--link);
-            text-decoration: none;
-            font-weight: 700;
-        }
-        
-        sup .cite:hover {
-            text-decoration: underline;
-        }
-        
-        #hero {
-            position: fixed;
-            inset: 0;
-            z-index: 150;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 6vw;
-            pointer-events: none;
-        }
-        
-        #hero-inner {
-            max-width: 900px;
-        }
-        
-        #hero-title {
-            font-family: "Times New Roman", Times, serif;
-            font-size: clamp(28px, 4.4vw, 60px);
-            line-height: 1.18;
-            color: var(--ink-title);
-            font-weight: 700;
-            margin: 0 0 28px;
-            letter-spacing: 0.2px;
-        }
-        
-        #hero-authors {
-            font-family: "Times New Roman", Times, serif;
-            font-size: clamp(16px, 1.6vw, 22px);
-            color: var(--ink-soft);
-            font-style: italic;
-        }
-        
-        #hero-scroll {
-            margin-top: 54px;
-            font-family: "Times New Roman", Times, serif;
-            font-size: 14px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--ink-muted);
-            animation: heroBob 2.2s ease-in-out infinite;
-        }
-        
-        @keyframes heroBob {
-            0%,
-            100% {
-                transform: translateY(0);
-                opacity: .7
-            }
-            50% {
-                transform: translateY(6px);
-                opacity: 1
-            }
-        }
-        
-        body:has(#graphic.layout-tree-overlay) #site-header {
-            background: rgba(255, 255, 255, 0.45);
-            -webkit-backdrop-filter: blur(6px);
-            backdrop-filter: blur(6px);
-            border-bottom: none;
-        }
-        
-        #graphic.layout-tree-overlay #vis {
-            position: fixed;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            height: 100vh;
-            width: 100vw;
-            z-index: 40;
-        }
-        /* tree intro: NO full-screen tint. The only wash is the zoom/dive wash that
-       js/sketches/viz/viz_title.js draws while plunging into the crown, so the
-       tree shows at full color until that moment. */
-        
-        #graphic.layout-tree-overlay #sections {
-            width: 0;
-            z-index: 60;
-            pointer-events: none;
-        }
-        
-        #graphic.layout-tree-overlay .step {
-            pointer-events: none;
-            color: transparent;
-        }
-        
-        #graphic.layout-tree-overlay .step .title {
-            color: transparent;
-        }
-        
-        #graphic.layout-tree-overlay .step .tree-panel {
-            position: fixed;
-            z-index: 70;
-            width: min(460px, 88vw);
-            padding: 26px 30px;
-            border-radius: 16px;
-            color: #14181c;
-            font-size: 19.5px;
-            line-height: 1.78;
-            pointer-events: auto;
-            opacity: 0;
-            transition: opacity .45s ease;
-            background: rgba(252, 251, 248, 0.82);
-            -webkit-backdrop-filter: blur(14px);
-            backdrop-filter: blur(14px);
-            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.85);
-        }
-        
-        #graphic.layout-tree-overlay .step .tree-panel .title {
-            color: #10140d;
-            font-size: 29px;
-            line-height: 1.25;
-            margin-bottom: 12px;
-        }
-        /* SECTION 0 — centered in the viewport (vw/vh so an ancestor transform
-           can't re-anchor it off-screen). */
-        
-        #graphic.layout-tree-overlay .step[data-active-index="0"] .tree-panel {
-            left: 52vw;
-            top: 50vh;
-            bottom: auto;
-            transform: translate(-50%, -50%);
-        }
-        /* SECTION 1 — centered in the viewport, matching section 0. The crown
-           names are ringed around the crown's edges (in viz_title.js) so they
-           flank this panel instead of hiding behind it. */
-        
-        #graphic.layout-tree-overlay .step[data-active-index="1"] .tree-panel {
-            left: 52.5vw;
-            top: 50vh;
-            bottom: auto;
-            transform: translate(-50%, -50%);
-        }
-        
-        #graphic.layout-tree-overlay .step[style*="opacity: 1"] .tree-panel {
-            opacity: 1;
-        }
-        
-        .two-hearts {
-            width: min(92vw, 1100px);
-            margin: 0 auto;
-            font-family: "Times New Roman", Times, serif;
-        }
-        
-        .th-toggle {
-            display: flex;
-            gap: 0;
-            justify-content: center;
-            margin: 4px 0 22px;
-            border: 1px solid var(--ink-muted, #8a9b8e);
-            border-radius: 999px;
-            width: max-content;
-            margin-left: auto;
-            margin-right: auto;
-            overflow: hidden;
-        }
-        
-        .th-btn {
-            font-family: "Times New Roman", Times, serif;
-            font-size: 15px;
-            cursor: pointer;
-            border: none;
-            background: transparent;
-            padding: 9px 22px;
-            color: var(--ink-soft, #5a6b60);
-            transition: all .25s;
-        }
-        
-        .th-btn.th-active {
-            background: var(--ink-title, #16201b);
-            color: #fff;
-        }
-        
-        .th-stage {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 3vw;
-        }
-        
-        .th-heart {
-            flex: 1 1 0;
-            max-width: 520px;
-            text-align: center;
-        }
-        
-        .th-vs {
-            font-style: italic;
-            color: var(--ink-muted, #8a9b8e);
-            font-size: 17px;
-            padding: 0 4px;
-        }
-        
-        .th-name {
-            font-size: 17px;
-            font-weight: 700;
-            color: var(--ink-title, #16201b);
-            margin-bottom: 4px;
-        }
-        
-        .th-sub {
-            font-weight: 400;
-            font-style: italic;
-            color: var(--ink-muted, #8a9b8e);
-            font-size: 13px;
-        }
-        
-        .th-canvas {
-            display: block;
-            width: 100%;
-        }
-        
-        .th-bpm {
-            margin-top: 2px;
-        }
-        
-        .th-bpm-num {
-            font-size: 34px;
-            font-weight: 700;
-            color: var(--ink-title, #16201b);
-        }
-        
-        .th-bpm-unit {
-            font-size: 14px;
-            color: var(--ink-muted, #8a9b8e);
-            margin-left: 4px;
-        }
-        
-        .th-spark {
-            display: block;
-            width: 100%;
-            height: 176px;
-            margin-top: 2px;
-        }
-        
-        .th-caption {
-            text-align: center;
-            font-size: 15px;
-            line-height: 1.6;
-            color: var(--ink, #1f2730);
-            max-width: 620px;
-            margin: 18px auto 0;
-        }
-        
-        .th-note {
-            text-align: center;
-            font-size: 12px;
-            line-height: 1.5;
-            color: var(--ink-muted, #8a9b8e);
-            max-width: 600px;
-            margin: 12px auto 0;
-            font-style: italic;
-        }
-        
-        .hr-scrolly {
-            display: flex;
-            align-items: flex-start;
-            gap: 2.5vw;
-            width: 94vw;
-            margin-left: calc(50% - 47vw);
-            margin-right: calc(50% - 47vw);
-            box-sizing: border-box;
-        }
-        
-        .hr-graphic {
-            position: sticky;
-            top: 7vh;
-            flex: 0 0 56%;
-            min-width: 0;
-            align-self: flex-start;
-        }
-        
-        .hr-graphic .two-hearts {
-            width: 100%;
-        }
-        
-        .hr-graphic .th-caption,
-        .hr-graphic .th-note {
-            display: none;
-        }
-        
-        .hr-story {
-            flex: 1 1 0;
-            min-width: 0;
-            padding: 7vh 0 9vh;
-            text-align: left;
-            color: var(--ink, #1f2730);
-        }
-        
-        .hr-story .title {
-            text-align: left;
-            margin-bottom: 20px;
-            font-size: 27px;
-        }
-        
-        .hr-story p {
-            font-size: 18px;
-            line-height: 1.72;
-            margin: 0 0 22px;
-        }
-        
-        .hr-switch {
-            margin: 28px 0;
-        }
-        
-        .hr-switch button {
-            font-family: "Times New Roman", Times, serif;
-            font-size: 17px;
-            cursor: pointer;
-            color: #fff;
-            background: var(--ink-title, #16201b);
-            border: none;
-            padding: 12px 24px;
-            border-radius: 999px;
-            transition: opacity .2s, transform .2s;
-        }
-        
-        .hr-switch button:hover {
-            opacity: .88;
-            transform: translateY(-1px);
-        }
-        
-        .hr-story .hr-limit {
-            font-size: 15px;
-            line-height: 1.6;
-            background: rgba(120, 140, 110, 0.09);
-            border-left: 3px solid var(--ink-muted, #8a9b8e);
-            padding: 14px 16px;
-            border-radius: 2px;
-        }
-        
-        .hr-story .hr-cite {
-            font-size: 13px;
-            line-height: 1.5;
-            color: var(--ink-muted, #8a9b8e);
-            margin-top: 18px;
-        }
-        
-        @media (max-width: 880px) {
-            .hr-scrolly {
-                flex-direction: column;
-                width: 92vw;
-                margin-left: calc(50% - 46vw);
-                margin-right: calc(50% - 46vw);
-            }
-            .hr-graphic {
-                position: static;
-                flex-basis: auto;
-                width: 100%;
-            }
-            .hr-story {
-                padding: 24px 0 0;
-            }
-        }
-    </style>
+    <!-- page styles live in css/style.css -->
 </head>
 
 <body>
@@ -523,8 +73,64 @@
                 </section>
 
                 <section class="step" data-active-index="3" data-layout="full-text">
-                    <div class="title">But volume isn't proof</div>
-                    Thousands of trials tell us meditation is <i>studied</i> — not that it <i>works</i>. To judge that, we look inside the body. We start with a classic physiological question, and the data turns out to tell more than one story.
+                    <svg class="vp-roots" viewBox="0 0 680 600" preserveAspectRatio="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="vpVein" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#6f5236"/>
+                                <stop offset="50%" stop-color="#8a5238"/>
+                                <stop offset="100%" stop-color="#8e2017"/>
+                            </linearGradient>
+                            <radialGradient id="vpGlow">
+                                <stop offset="0%" stop-color="#bd3a28" stop-opacity="0.8"/>
+                                <stop offset="100%" stop-color="#bd3a28" stop-opacity="0"/>
+                            </radialGradient>
+                            <!-- veins fade to nothing into the paper at the very top and bottom -->
+                            <linearGradient id="vpMaskGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="600">
+                                <stop offset="0%" stop-color="#000000"/>
+                                <stop offset="10%" stop-color="#ffffff"/>
+                                <stop offset="90%" stop-color="#ffffff"/>
+                                <stop offset="100%" stop-color="#000000"/>
+                            </linearGradient>
+                            <mask id="vpEdgeMask" maskUnits="userSpaceOnUse" x="0" y="0" width="680" height="600">
+                                <rect x="0" y="0" width="680" height="600" fill="url(#vpMaskGrad)"/>
+                            </mask>
+                        </defs>
+                        <g class="vgroup" mask="url(#vpEdgeMask)" fill="none" stroke="url(#vpVein)" stroke-linecap="round">
+                            <!-- top canopy: spread from the left corner across to the right -->
+                            <path class="v" pathLength="1" stroke-width="2.0" d="M 16 0 C 30 52 10 112 58 158"/>
+                            <path class="v" pathLength="1" stroke-width="3.0" d="M 120 0 C 130 60 112 122 152 160"/>
+                            <path class="v" pathLength="1" stroke-width="3.4" d="M 235 0 C 228 66 244 126 236 162"/>
+                            <path class="v" pathLength="1" stroke-width="3.2" d="M 348 0 C 356 66 340 126 350 160"/>
+                            <path class="v" pathLength="1" stroke-width="3.0" d="M 460 0 C 452 66 468 126 458 162"/>
+                            <path class="v" pathLength="1" stroke-width="2.2" d="M 565 0 C 575 60 558 122 526 160"/>
+                            <path class="v" pathLength="1" stroke-width="1.4" d="M 236 162 l -12 16"/>
+                            <path class="v" pathLength="1" stroke-width="1.4" d="M 458 162 l 12 16"/>
+                            <!-- bottom roots: mirror spread -->
+                            <path class="v" pathLength="1" stroke-width="2.0" d="M 20 600 C 34 548 14 488 62 442"/>
+                            <path class="v" pathLength="1" stroke-width="3.0" d="M 124 600 C 134 540 116 478 156 440"/>
+                            <path class="v" pathLength="1" stroke-width="3.4" d="M 238 600 C 231 534 247 474 239 442"/>
+                            <path class="v" pathLength="1" stroke-width="3.2" d="M 350 600 C 358 534 342 474 352 440"/>
+                            <path class="v" pathLength="1" stroke-width="3.0" d="M 462 600 C 454 534 470 474 460 442"/>
+                            <path class="v" pathLength="1" stroke-width="2.2" d="M 566 600 C 576 540 559 478 527 440"/>
+                            <path class="v" pathLength="1" stroke-width="1.4" d="M 156 440 l -12 -16"/>
+                            <path class="v" pathLength="1" stroke-width="1.4" d="M 460 442 l 12 -16"/>
+                            <!-- continuous right vein (carries the heartbeat) - in the right margin, clear of the words -->
+                            <path id="vpRT" class="v" pathLength="1" stroke-width="3.0" d="M 648 0 C 636 112 660 242 650 362 C 644 472 662 540 650 600"/>
+                            <path class="v" pathLength="1" stroke-width="1.4" d="M 650 362 l 14 12"/>
+                        </g>
+                        <g class="vp-pulse" mask="url(#vpEdgeMask)">
+                            <circle r="8" fill="url(#vpGlow)"/>
+                            <circle r="2.8" fill="#9e2b18"/>
+                            <animateMotion dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.6 1"><mpath href="#vpRT"/></animateMotion>
+                        </g>
+                    </svg>
+                    <div class="vp-text">
+                        <div class="title">But volume isn't proof</div>
+                        <div>
+                            Thousands of trials tell us meditation is <i>studied</i>, not that it <i>works</i>. To judge that, we have to look inside the body, beginning with the simplest question we can ask it: when you sit in stillness, does your heart
+                            actually slow down? The answer, it turns out, is more than one story.
+                        </div>
+                    </div>
                 </section>
 
                 <section class="step" data-active-index="4" data-layout="full-text">
@@ -605,7 +211,6 @@
                     </div>
                 </section>
 
-
             </div>
             <div id='vis' class='vis-hidden'>
             </div>
@@ -620,150 +225,6 @@
         };
     </script>
 
-    <script>
-        (function() {
-            var LEAVES_ENABLED = false;
-            var cv = document.getElementById('motes'),
-                ctx = cv.getContext('2d');
-            var MOTE_RGB = (getComputedStyle(document.documentElement)
-                .getPropertyValue('--mote').trim() || '120,140,110');
-            var motes = [],
-                DPR = Math.min(2, window.devicePixelRatio || 1);
-
-            function resize() {
-                cv.width = innerWidth * DPR;
-                cv.height = innerHeight * DPR;
-                cv.style.width = innerWidth + 'px';
-                cv.style.height = innerHeight + 'px';
-                ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-                var n = Math.round((innerWidth * innerHeight) / 42000);
-                motes = [];
-                for (var i = 0; i < n; i++) motes.push(newMote(true));
-            }
-
-            function newMote(anywhere) {
-                return {
-                    x: Math.random() * innerWidth,
-                    y: anywhere ? Math.random() * innerHeight : innerHeight + 10,
-                    r: 0.6 + Math.random() * 2.2,
-                    vx: (Math.random() - 0.5) * 0.12,
-                    vy: -(0.08 + Math.random() * 0.28),
-                    a: 0.06 + Math.random() * 0.20,
-                    tw: Math.random() * Math.PI * 2
-                };
-            }
-            var FALL = [
-                [196, 86, 42],
-                [214, 142, 48],
-                [168, 58, 40],
-                [138, 110, 52],
-                [122, 142, 66]
-            ];
-            var leaves = [];
-
-            function spawnLeaf(targets) {
-                var bar = targets[Math.floor(Math.random() * targets.length)];
-                if (!bar || bar.w < 6) return;
-                var landX = bar.x + Math.random() * bar.w;
-                var landY = bar.y + bar.h * (0.3 + Math.random() * 0.4);
-                leaves.push({
-                    x: Math.random() * innerWidth,
-                    y: -20 - Math.random() * 80,
-                    tx: landX,
-                    ty: landY,
-                    vy: 0.65 + Math.random() * 0.85,
-                    sway: Math.random() * 6.28,
-                    rot: Math.random() * 6.28,
-                    vr: (Math.random() - 0.5) * 0.08,
-                    swayAmp: 0.7 + Math.random() * 0.8,
-                    size: 7 + Math.random() * 7,
-                    col: FALL[Math.floor(Math.random() * FALL.length)],
-                    life: 0
-                });
-            }
-
-            function leafTick() {
-                if (!LEAVES_ENABLED) {
-                    if (leaves.length) leaves.length = 0;
-                    return;
-                }
-                var lt = window.__leafTargets;
-                var fresh = lt && (((window.performance ? performance.now() : Date.now()) - (lt.stamp || 0)) < 250);
-                var live = fresh && lt.active && lt.bars && lt.bars.length;
-                if (live) {
-                    var rate = lt.filling ? 3 : 1;
-                    var cap = lt.filling ? 120 : 40;
-                    if (leaves.length < cap && (lt.filling || (Math.random() < 0.4))) {
-                        for (var s = 0; s < rate; s++) spawnLeaf(lt.bars);
-                    }
-                } else if (leaves.length) {
-                    leaves.length = 0;
-                }
-                for (var i = leaves.length - 1; i >= 0; i--) {
-                    var lf = leaves[i];
-                    lf.life++;
-                    lf.sway += 0.035;
-                    lf.rot += lf.vr;
-                    lf.y += lf.vy;
-                    lf.x += Math.sin(lf.sway) * lf.swayAmp + (lf.tx - lf.x) * 0.006;
-                    var done = lf.y >= lf.ty;
-                    if (done) {
-                        leaves.splice(i, 1);
-                        continue;
-                    }
-                    var a = Math.min(1, lf.life / 10) * 0.92;
-                    ctx.save();
-                    ctx.translate(lf.x, lf.y);
-                    ctx.rotate(lf.rot);
-                    ctx.fillStyle = 'rgba(' + lf.col[0] + ',' + lf.col[1] + ',' + lf.col[2] + ',' + a.toFixed(3) + ')';
-                    ctx.beginPath();
-                    ctx.ellipse(0, 0, lf.size, lf.size * 0.6, 0, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.strokeStyle = 'rgba(' + (lf.col[0] * 0.6 | 0) + ',' + (lf.col[1] * 0.6 | 0) + ',' + (lf.col[2] * 0.55 | 0) + ',' + a.toFixed(3) + ')';
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(-lf.size * 0.4, 0);
-                    ctx.lineTo(lf.size * 0.4, 0);
-                    ctx.stroke();
-                    ctx.restore();
-                }
-            }
-
-            function tick(t) {
-                ctx.clearRect(0, 0, innerWidth, innerHeight);
-                for (var i = 0; i < motes.length; i++) {
-                    var m = motes[i];
-                    m.x += m.vx;
-                    m.y += m.vy;
-                    m.tw += 0.02;
-                    if (m.y < -10 || m.x < -10 || m.x > innerWidth + 10) motes[i] = newMote(false);
-                    var alpha = m.a * (0.6 + 0.4 * Math.sin(m.tw));
-                    ctx.beginPath();
-                    ctx.fillStyle = 'rgba(' + MOTE_RGB + ',' + alpha.toFixed(3) + ')';
-                    ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                leafTick();
-                requestAnimationFrame(tick);
-            }
-            resize();
-            addEventListener('resize', resize);
-            requestAnimationFrame(tick);
-            var hero = document.getElementById('hero');
-
-            function onScroll() {
-                var h = innerHeight;
-                var p = Math.min(1, scrollY / (h * 0.32));
-                hero.style.opacity = (1 - p).toFixed(3);
-                hero.style.transform = 'translateY(' + (-p * 60).toFixed(1) + 'px)';
-                hero.style.display = p >= 1 ? 'none' : 'flex';
-            }
-            addEventListener('scroll', onScroll, {
-                passive: true
-            });
-            onScroll();
-        })();
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
     <script src="js/helpers/data_loader.js"></script>
@@ -782,6 +243,7 @@
     <script src="js/sketches/sketch_renderer.js"></script>
     <script src="js/hr_two_hearts.js"></script>
 
+    <script src="js/page_effects.js"></script>
 </body>
 
-</html>
+</html>0
