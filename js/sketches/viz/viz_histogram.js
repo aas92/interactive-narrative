@@ -17,7 +17,7 @@
         var rev = C.reveal(progress);
 
         C.title(p, f,
-            'Reported Stress: Body Scan Group vs. Control Group',
+            'Control groups reduced stress too, but Body Scans are more effective.',
             'Distribution of STAI-State scores by condition');
 
         var colControl  = C.PALETTE.slate;
