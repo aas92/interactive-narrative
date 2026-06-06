@@ -851,6 +851,16 @@ body::before {
     font-size: 20px;
 }
 
+#sections .step[data-active-index="4"],
+#sections .step[data-active-index="5"],
+#sections .step[data-active-index="6"],
+#sections .step[data-active-index="7"],
+#sections .step[data-active-index="8"],
+#sections .step[data-active-index="9"] {
+    font-size: 20px;
+}
+
+
 #sections .step[data-active-index="3"] .vp-roots {
     position: absolute;
     top: 0;
