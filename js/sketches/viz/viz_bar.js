@@ -122,9 +122,9 @@
             stamp: (window.performance ? performance.now() : Date.now())
         };
 
-        legend(p, f, [
+        /*legend(p, f, [
             ['Meditation-Based Studies', col]
-        ]);
+        ]);*/
     }
 
     // ---- leaf-fall helpers (scoped to the conditions chart) ----
