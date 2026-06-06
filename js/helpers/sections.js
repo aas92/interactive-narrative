@@ -1,7 +1,7 @@
 // sections.js
 // Orchestrator: loads data, starts the p5 sketch, and wires scroll -> visual state
 
-(function () {
+(function() {
     function displayData() {
 
         // Configuration: defaults, then window.ScrollDemoConfig, then data-attributes on the container
@@ -40,7 +40,7 @@
             if (visStartEl && (cfg.showAt || 0) > 0) {
                 visStartEl.classList.add(cfg.visHiddenClass);
             }
-        } catch (e) { }
+        } catch (e) {}
 
         // Start p5 sketch with retries if startP5 isn't defined yet.
         (function callStartP5WithRetry(attempts) {
@@ -54,7 +54,7 @@
                     // to resolve before exposing the API globally. This ensures
                     // consumers of `window.__sketchAPI` see the populated data.
                     if (api && api.ready && typeof api.ready.then === 'function') {
-                        api.ready.then(function () {
+                        api.ready.then(function() {
                             try {
                                 if (api && api.setState) window.__sketchAPI = api;
                                 window.__sections_startCalled = true;
@@ -62,7 +62,7 @@
                             } catch (e) {
                                 console.error('sections: error exposing api after ready', e);
                             }
-                        }).catch(function (err) {
+                        }).catch(function(err) {
                             console.error('sections: startP5 ready promise rejected', err);
                             if (api && api.setState) window.__sketchAPI = api;
                         });
@@ -91,9 +91,9 @@
                         visualController = new VisualControllerCtor({ visSelector: cfg.visSelector, showAt: cfg.showAt });
                     }
 
-                    sc.on('active', function (index) {
+                    sc.on('active', function(index) {
                         // highlight steps (light coupling — just visual text opacity)
-                        document.querySelectorAll('.step').forEach(function (el, i) {
+                        document.querySelectorAll('.step').forEach(function(el, i) {
                             el.style.opacity = (i === index) ? '1' : '0.1';
                         });
 
@@ -103,7 +103,7 @@
                             graphic.classList.remove('layout-full-text', 'layout-full-viz', 'layout-tree-overlay');
                             var layout = sc.steps[index] && sc.steps[index].dataset && sc.steps[index].dataset.layout;
                             if (layout) graphic.classList.add('layout-' + layout);
-                            requestAnimationFrame(function () {
+                            requestAnimationFrame(function() {
                                 if (window.__sketchAPI && window.__sketchAPI.p5 &&
                                     typeof window.__sketchAPI.p5.windowResized === 'function') {
                                     window.__sketchAPI.p5.windowResized();
@@ -130,7 +130,7 @@
                         if (visualController) visualController.handleActive(mappedIndex);
                     });
 
-                    sc.on('progress', function (index, progress) {
+                    sc.on('progress', function(index, progress) {
                         // Map index to any per-section activeIndex so the sketch receives
                         // a consistent activeIndex value during progress updates.
                         var mappedIndex = index;
@@ -153,7 +153,7 @@
                 }
             } else if (attempts > 0) {
                 console.warn('sections: startP5 not ready, retrying in 200ms (attempts left)', attempts);
-                setTimeout(function () { callStartP5WithRetry(attempts - 1); }, 200);
+                setTimeout(function() { callStartP5WithRetry(attempts - 1); }, 200);
             } else {
                 console.error('sections: startP5 not available after retries — p5 visual will not start');
             }

@@ -75,8 +75,10 @@
 
         window.addEventListener('resize', this.resize);
         window.addEventListener('scroll', this.position);
-        setTimeout(function() { self.resize();
-            self.position(); }, 50);
+        setTimeout(function() {
+            self.resize();
+            self.position();
+        }, 50);
     }
 
     Scroller.prototype.on = function(action, cb) {
