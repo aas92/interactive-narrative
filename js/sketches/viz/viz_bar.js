@@ -267,7 +267,7 @@
             { key: 'heart_rate', label: 'Resting HR', lo: 65, hi: 85, better: 'low' },
             { key: 'daily_steps', label: 'Daily steps', lo: 3000, hi: 10000, better: 'high' }
         ];
-        var tierCols = [C.PALETTE.green, C.PALETTE.amber, C.PALETTE.red];
+        var tierCols = [[44, 123, 182], [253, 174, 97], [215, 48, 39]];
         var groupW = f.w / metrics.length;
         for (var mi = 0; mi < metrics.length; mi++) {
             var mt = metrics[mi],
