@@ -119,7 +119,7 @@
         p.line(f.x, f.y + f.h, f.x + f.w, f.y + f.h);
         // y-axis line
         p.line(f.x, f.y, f.x, f.y + f.h);
-        p.noStroke(); p.fill(120); p.textSize(10);
+        p.noStroke(); p.fill(120); p.textSize(12);
 
         // x-axis ticks and labels
         for (var i = 0; i <= 5; i++) {
