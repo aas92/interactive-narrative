@@ -262,10 +262,10 @@
             'Each metric scaled 0–100% of its own range (honest comparison)');
         var rev = C.reveal(prog);
         var metrics = [
-            { key: 'sleep_quality', label: 'Sleep quality', lo: 4, hi: 9, better: 'high' },
-            { key: 'sleep_duration', label: 'Sleep hours', lo: 5.5, hi: 8.5, better: 'high' },
-            { key: 'heart_rate', label: 'Resting HR', lo: 65, hi: 85, better: 'low' },
-            { key: 'daily_steps', label: 'Daily steps', lo: 3000, hi: 10000, better: 'high' }
+            { key: 'sleep_quality',  label: 'Sleep quality', lo: 4,    hi: 9,     better: 'high', axisLabel: 'Sleep Score)' },
+            { key: 'sleep_duration', label: 'Sleep hours',   lo: 5.5,  hi: 8.5,   better: 'high', axisLabel: 'Hours of Sleep'        },
+            { key: 'heart_rate',     label: 'Resting HR',    lo: 65,   hi: 85,    better: 'low',  axisLabel: 'Resting Heart Rate'        },
+            { key: 'daily_steps',    label: 'Daily steps',   lo: 3000, hi: 10000, better: 'high', axisLabel: 'Steps'      }
         ];
         var tierCols = [[44, 123, 182], [253, 174, 97], [215, 48, 39]];
         var groupW = f.w / metrics.length;
@@ -285,13 +285,36 @@
                 p.rect(x, f.y + f.h - h, bw, h, 2);
                 p.fill(C.PALETTE.ink);
                 p.textAlign(p.CENTER, p.BOTTOM);
-                p.textSize(9.5);
+                p.textSize(14);
                 p.text(fmtVal(mt.key, raw), x + bw / 2, f.y + f.h - h - 2);
             }
             p.fill(90);
             p.textAlign(p.CENTER, p.TOP);
-            p.textSize(11);
+            p.textSize(14);
             p.text(mt.label, gx + groupW / 2, f.y + f.h + 6);
+            // mini y-axis for this metric group
+            var axX = gx + 4;
+            var axisTicks = [mt.lo, (mt.lo + mt.hi) / 2, mt.hi];
+            for (var ai = 0; ai < axisTicks.length; ai++) {
+                var tv = axisTicks[ai];
+                var ty = f.y + f.h - ((tv - mt.lo) / (mt.hi - mt.lo)) * f.h;
+                var tLabel = mt.key === 'daily_steps' ? Math.round(tv / 1000) + 'k' : tv;
+                p.stroke(0); p.strokeWeight(0.5);
+                p.line(axX - 3, ty, axX + 3, ty);
+                p.noStroke(); p.fill(0);
+                p.textSize(8); p.textAlign(p.RIGHT, p.CENTER);
+                p.text(tLabel, axX - 5, ty);
+            }
+            p.stroke(0); p.strokeWeight(0.5);
+            p.line(axX, f.y, axX, f.y + f.h);
+            p.noStroke();
+            p.push();
+            p.noStroke(); p.fill(0);
+            p.textSize(14); p.textAlign(p.CENTER, p.BASELINE);
+            p.translate(axX - 20, f.y + f.h / 2);
+            p.rotate(-Math.PI / 2);
+            p.text(mt.axisLabel, 0, 0);
+            p.pop();
         }
         legend(p, f, d.map(function(t, i) { return [t.tier, tierCols[i]]; }));
     }
