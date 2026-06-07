@@ -258,11 +258,10 @@
             f = C.frame(m),
             d = (m.medData && m.medData.stress_tiers) || [];
         if (!d.length) return;
-        C.title(p, f, 'As stress rises, health markers worsen',
-            'Each metric scaled 0–100% of its own range (honest comparison)');
+        C.title(p, f, 'As stress rises, health markers get worse.');
         var rev = C.reveal(prog);
         var metrics = [
-            { key: 'sleep_quality',  label: 'Sleep quality', lo: 4,    hi: 9,     better: 'high', axisLabel: 'Sleep Score)' },
+            { key: 'sleep_quality',  label: 'Sleep quality', lo: 4,    hi: 9,     better: 'high', axisLabel: 'Sleep Score' },
             { key: 'sleep_duration', label: 'Sleep hours',   lo: 5.5,  hi: 8.5,   better: 'high', axisLabel: 'Hours of Sleep'        },
             { key: 'heart_rate',     label: 'Resting HR',    lo: 65,   hi: 85,    better: 'low',  axisLabel: 'Resting Heart Rate'        },
             { key: 'daily_steps',    label: 'Daily steps',   lo: 3000, hi: 10000, better: 'high', axisLabel: 'Steps'      }
@@ -316,7 +315,8 @@
             p.text(mt.axisLabel, 0, 0);
             p.pop();
         }
-        legend(p, f, d.map(function(t, i) { return [t.tier, tierCols[i]]; }));
+        var tierN = [141, 113, 120];
+        legend(p, f, d.map(function(t, i) { return [t.tier.replace(' ', ' Stress ') + '  (n=' + tierN[i] + ')', tierCols[i]]; }));
     }
 
     function fmtVal(key, v) {
