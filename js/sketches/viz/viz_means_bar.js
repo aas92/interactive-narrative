@@ -18,7 +18,7 @@
         var rev = C.reveal(progress);
 
         C.title(p, f,
-            'Mean state anxiety after a single exercise',
+            'Meditation exercises outperform control in lowering self reported stress scores',
             'STAI-State score (lower = less anxious) · 95 % CI whiskers');
 
         var bw = (f.w / d.length) * 0.45;
