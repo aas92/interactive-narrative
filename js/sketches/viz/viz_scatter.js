@@ -96,7 +96,7 @@
         p.line(sx(3), sy(a + b * 3), sx(8), sy(a + b * 8));
         p.noStroke();
 
-        axisXY(p, f, loX, hiX, loY, hiY, 'stress level (1-10)', 'sleep quality (1-10)');
+        axisXY(p, f, loX, hiX, loY, hiY, 'Stress Level (1-10)', 'Sleep Quality (1-10)');
         legend(p, f, [['No disorder', C.PALETTE.green], ['Insomnia', C.PALETTE.red],
             ['Sleep apnea', C.PALETTE.amber]]);
     }
@@ -146,7 +146,7 @@
         }
 
         // axis titles
-        p.noStroke(); p.fill(120); p.textSize(11);
+        p.noStroke(); p.fill(0); p.textSize(14);
         p.textAlign(p.CENTER, p.TOP);
         p.text(lx, f.x + f.w / 2, f.y + f.h + 24);
         p.push();
@@ -155,8 +155,8 @@
         p.pop();
     }
     function legend(p, f, items) {
-        var x = f.x, y = f.oy + f.H - 16;
-        p.textSize(11); p.textAlign(p.LEFT, p.CENTER);
+        var x = f.x + 260, y = f.oy + 36;
+        p.textSize(14); p.textAlign(p.LEFT, p.CENTER);
         for (var i = 0; i < items.length; i++) {
             var c = items[i][1];
             p.noStroke(); p.fill(c[0], c[1], c[2]); p.rect(x, y - 5, 11, 11, 2);
