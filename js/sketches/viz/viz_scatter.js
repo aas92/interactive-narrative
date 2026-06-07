@@ -65,7 +65,7 @@
         var loX = 2.5, hiX = 8.5, loY = 3.5, hiY = 9.5;
         function sx(v) { return f.x + (v - loX) / (hiX - loX) * f.w; }
         function sy(v) { return f.y + f.h - (v - loY) / (hiY - loY) * f.h; }
-        gridBox(p, f);
+        // gridBox(p, f);
 
         // cache jitter once
         if (!m._ssJit || m._ssJit.length !== d.length) {
@@ -112,11 +112,47 @@
         p.noStroke();
     }
     function axisXY(p, f, loX, hiX, loY, hiY, lx, ly) {
+        var C = U();
+        p.stroke(C.PALETTE.ink[0], C.PALETTE.ink[1], C.PALETTE.ink[2]);
+        p.strokeWeight(1);
+        // x-axis line
+        p.line(f.x, f.y + f.h, f.x + f.w, f.y + f.h);
+        // y-axis line
+        p.line(f.x, f.y, f.x, f.y + f.h);
+        p.noStroke(); p.fill(120); p.textSize(10);
+
+        // x-axis ticks and labels
+        for (var i = 0; i <= 5; i++) {
+            var tx = f.x + f.w * i / 5;
+            var tv = loX + (hiX - loX) * i / 5;
+            p.stroke(C.PALETTE.ink[0], C.PALETTE.ink[1], C.PALETTE.ink[2]);
+            p.strokeWeight(1);
+            p.line(tx, f.y + f.h, tx, f.y + f.h + 4);
+            p.noStroke(); p.fill(120);
+            p.textAlign(p.CENTER, p.TOP);
+            p.text(Math.round(tv * 10) / 10, tx, f.y + f.h + 6);
+        }
+
+        // y-axis ticks and labels
+        for (var i = 0; i <= 5; i++) {
+            var ty = f.y + f.h - f.h * i / 5;
+            var tv = loY + (hiY - loY) * i / 5;
+            p.stroke(C.PALETTE.ink[0], C.PALETTE.ink[1], C.PALETTE.ink[2]);
+            p.strokeWeight(1);
+            p.line(f.x - 4, ty, f.x, ty);
+            p.noStroke(); p.fill(120);
+            p.textAlign(p.RIGHT, p.CENTER);
+            p.text(Math.round(tv * 10) / 10, f.x - 6, ty);
+        }
+
+        // axis titles
         p.noStroke(); p.fill(120); p.textSize(11);
-        p.textAlign(p.CENTER, p.TOP); p.text(lx, f.x + f.w / 2, f.y + f.h + 24);
+        p.textAlign(p.CENTER, p.TOP);
+        p.text(lx, f.x + f.w / 2, f.y + f.h + 24);
         p.push();
         p.translate(f.ox + 14, f.y + f.h / 2); p.rotate(-Math.PI / 2);
-        p.textAlign(p.CENTER, p.CENTER); p.text(ly, 0, 0); p.pop();
+        p.textAlign(p.CENTER, p.CENTER); p.text(ly, 0, 0);
+        p.pop();
     }
     function legend(p, f, items) {
         var x = f.x, y = f.oy + f.H - 16;
