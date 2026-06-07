@@ -290,7 +290,7 @@
             p.fill(90);
             p.textAlign(p.CENTER, p.TOP);
             p.textSize(14);
-            p.text(mt.label, gx + groupW / 2, f.y + f.h + 6);
+            // p.text(mt.label, gx + groupW / 2, f.y + f.h + 6); // redundant — described by y-axis labels
             // mini y-axis for this metric group
             var axX = gx + 4;
             var axisTicks = [mt.lo, (mt.lo + mt.hi) / 2, mt.hi];
