@@ -351,7 +351,7 @@
             var w = cv.clientWidth, h = cv.clientHeight;
             // slightly smaller base leaves room for a bigger swell without the
             // heart's point clipping the canvas bottom on a strong beat.
-            var baseS = Math.min(w, h) / 33;
+            var baseS = Math.min(w, h) / 66;
             var s = baseS * (1 + env * 0.38);              // bigger swell per beat
 
             ctx.clearRect(0, 0, w, h);
