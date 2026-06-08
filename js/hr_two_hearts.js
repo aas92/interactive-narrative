@@ -183,7 +183,7 @@
             cv.style.width = hw + 'px'; cv.style.height = hh + 'px'; cv.style.margin = '0 auto';
             ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
             // time-series chart: stretch to the full (wider) column width
-            var sw = colW, sh = 176;
+            var sw = colW, sh = 400;
             sp.width = sw * DPR; sp.height = sh * DPR; sp.style.width = sw + 'px'; sp.style.height = sh + 'px';
             sctx.setTransform(DPR, 0, 0, DPR, 0, 0);
         }
