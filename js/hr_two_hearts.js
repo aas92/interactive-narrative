@@ -178,7 +178,7 @@
             var colW = el.clientWidth;
             // heart canvas: capped + centered so a wider column lengthens the
             // CHART below without ballooning the heart drawing.
-            var hw = Math.min(colW, 470), hh = Math.round(hw * 1.05);
+            var hw = Math.min(colW, 470), hh = Math.round(hw * .5);
             cv.width = hw * DPR; cv.height = hh * DPR;
             cv.style.width = hw + 'px'; cv.style.height = hh + 'px'; cv.style.margin = '0 auto';
             ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
