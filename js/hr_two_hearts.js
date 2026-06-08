@@ -52,12 +52,14 @@
         // real beat-to-beat traces (representative subjects)
         var data = {
             chi: {
-                name: 'Chi meditation', subject: 'C1', color: PALETTE.glow,
+                name: 'Chi meditation', subject: 'C1',
+                wash: '#BB6F52', washLo: '#8a4a32', glow: '#BB6F52',
                 pre: { bpm: grp.chi_meditation ? grp.chi_meditation.before : 81.4, trace: bpmSeries(ts, 'C1_pre_meditation'), times: timeSeries(ts, 'C1_pre_meditation') },
                 during: { bpm: grp.chi_meditation ? grp.chi_meditation.after : 78.0, trace: bpmSeries(ts, 'C1_meditation'), times: timeSeries(ts, 'C1_meditation') }
             },
             kun: {
-                name: 'Kundalini yoga', subject: 'Y1', color: PALETTE.glow,
+                name: 'Kundalini yoga', subject: 'Y1',
+                wash: '#7B8844', washLo: '#5c5e52', glow: '#7B8844',
                 pre: { bpm: grp.kundalini_yoga ? grp.kundalini_yoga.before : 61.0, trace: bpmSeries(ts, 'Y1_pre_meditation'), times: timeSeries(ts, 'Y1_pre_meditation') },
                 during: { bpm: grp.kundalini_yoga ? grp.kundalini_yoga.after : 92.0, trace: bpmSeries(ts, 'Y1_meditation'), times: timeSeries(ts, 'Y1_meditation') }
             }
@@ -170,7 +172,7 @@
         }
 
         var cur = { st: 'pre', bpm: info.pre.bpm, trace: info.pre.trace, times: info.pre.times,
-                    color: PALETTE.glow, wash: PALETTE.wash, washLo: PALETTE.washLo,
+                    color: info.glow, wash: info.wash, washLo: info.washLo,
                     lo: 60, hi: 90 };
         var beatPhase = 0, lastT = 0, traceI = 0;
 
@@ -194,8 +196,7 @@
             cur.bpm = info[st].bpm;
             cur.trace = info[st].trace && info[st].trace.length ? info[st].trace : [cur.bpm];
             cur.times = info[st].times && info[st].times.length ? info[st].times : [0];
-            var pal = paletteFor(st, cur.bpm);
-            cur.wash = pal.wash; cur.washLo = pal.washLo; cur.color = pal.glow;
+            cur.wash = info.wash; cur.washLo = info.washLo; cur.color = info.glow;
             // stable y-range for the time-series axis (computed once per state)
             var vmn = Math.min.apply(null, cur.trace), vmx = Math.max.apply(null, cur.trace);
             if (!isFinite(vmn) || (vmx - vmn) < 4) { vmn = cur.bpm - 6; vmx = cur.bpm + 6; }
