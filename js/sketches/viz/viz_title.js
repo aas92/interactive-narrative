@@ -248,7 +248,7 @@
         var nLH = nameSize * 1.3,
             bLH = bodySize * 1.45;
         var boxH = pad * 2 + nameLines.length * nLH + 8 + descLines.length * bLH + 8 + useLines.length * bLH;
-        var bx = h.br.side < 0 ? h.sx + h.r * 0.6 : h.sx - h.r * 0.6 - boxW;
+        var bx = h.sx - boxW / 2 - (h.br.side === 1 ? 60 : 0);
         bx = Math.max(ox + 8, Math.min(bx, ox + W - boxW - 8));
         var by = Math.max(oy + 8, Math.min(h.sy - boxH / 2, oy + H - boxH - 8));
         p.rectMode(p.CORNER);
