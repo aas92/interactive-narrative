@@ -447,7 +447,7 @@
             var branchExtend = ease(clamp01(bGrow / 0.55));
             var foliageGrow = ease(clamp01((bGrow - 0.45) / 0.55));
             var attachX = trunkX(f_i) + br.side * trunkW(f_i) * 0.35;
-            var targetTipX = br.side < 0 ? W * 0.16 : W * 0.84; // shorter branches so labels sit fully on-screen
+            var targetTipX = br.side < 0 ? W * 0.16 : W * 0.84 - 20; // shorter branches so labels sit fully on-screen
             var len = Math.abs(targetTipX - attachX);
             var tip = branch(p, attachX, by, br.side, len, H * 0.05, branchExtend, Math.max(3, W * 0.014));
             var leafWX = tip.x + br.side * crownR * 0.18,
