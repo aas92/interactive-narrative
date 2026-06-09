@@ -248,7 +248,7 @@
         var nLH = nameSize * 1.3,
             bLH = bodySize * 1.45;
         var boxH = pad * 2 + nameLines.length * nLH + 8 + descLines.length * bLH + 8 + useLines.length * bLH;
-        var bx = h.sx - boxW / 2 - (h.br.side === 1 ? 60 : 0);
+        var bx = h.sx - boxW / 2 - (h.br.side === 1 ? 60 : 0) + (h.br.crown ? 50 : 0);
         bx = Math.max(ox + 8, Math.min(bx, ox + W - boxW - 8));
         var by = Math.max(oy + 8, Math.min(h.sy - boxH / 2, oy + H - boxH - 8));
         p.rectMode(p.CORNER);
@@ -526,7 +526,7 @@
                                 sx: lx + ox,
                                 sy: lyW + (oy - camTop),
                                 r: Math.max(cw * 0.5 + 8, labSize * 1.4),
-                                br: { label: CROWN_LABELS[c], desc: CROWN_INFO[c].desc, use: CROWN_INFO[c].use, side: -sideSign }
+                                br: { label: CROWN_LABELS[c], desc: CROWN_INFO[c].desc, use: CROWN_INFO[c].use, side: -sideSign, crown: sideSign === 1 }
                             });
                         }
                     }
