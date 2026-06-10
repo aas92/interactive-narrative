@@ -9,7 +9,7 @@
 //   3  Bridge text (no viz)
 //   4  Heart-rate CAROUSEL (HTML/Chart.js, 3 stories) — no p5 viz
 //   5  Bridge text (no viz)
-//   6  Stress vs. sleep quality (r = -0.90)                      -> VizScatter
+//   6  Per-student stress-sleep correlation                       -> StressSleepCorrViz
 //   7  Stress tiers across health metrics                       -> VizBar
 //   8       STAI mean anxiety by condition                       -> MeansBarViz
 //   9       STAI score distribution histogram                    -> HistogramViz
@@ -42,6 +42,14 @@
                         ['bin_low', 'bin_high', 'control_pct', 'bodyscan_pct'],
                         []
                     );
+                    return fetch('data/stress_sleep_corr.tsv').then(function (r) { return r.text(); });
+                })
+                .then(function (tsv) {
+                    manager.data = window.DataLoader.parseGenericTSV(
+                        tsv,
+                        ['r', 'n_days'],
+                        []
+                    );
                     return manager.data;
                 })
                 .catch(function (err) {
@@ -62,7 +70,7 @@
             if (ai === 2 || ai === 7) { window.VizBar.draw(p, manager, ai, progress); return; }
 
             // 6 — stress vs sleep scatter
-            if (ai === 6) { window.VizScatter.draw(p, manager, ai, progress); return; }
+            if (ai === 6) { window.StressSleepCorrViz.draw(p, manager, ai, progress); return; }
 
             // 8 — STAI mean anxiety by condition
             if (ai === 8) { window.MeansBarViz.draw(p, manager, ai, progress); return; }
