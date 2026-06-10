@@ -51,7 +51,7 @@ window.StressSleepCorrViz = (function () {
     p.scale(scale);
 
     // Fade in based on scroll progress
-    const alpha = p.constrain(progress * 255, 0, 255);
+    const alpha = p.constrain(progress * 510, 0, 255);
 
     drawHeader(p, alpha);
     drawDirectionLabels(p, alpha);
