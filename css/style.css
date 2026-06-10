@@ -1298,7 +1298,7 @@ body:has(#graphic.layout-tree-overlay) #site-header {
     margin-left: calc(50% - min(47vw, 550px));
     box-sizing: border-box;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 2rem;
     line-height: 1.5;
     color: var(--ink, #1f2730);
     font-weight: 600;
