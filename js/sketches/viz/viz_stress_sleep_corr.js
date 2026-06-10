@@ -71,7 +71,7 @@ window.StressSleepCorrViz = (function () {
     p.noStroke();
     p.fill(COLOR_TEXT, alpha);
     p.textAlign(p.LEFT, p.BASELINE);
-    p.textStyle(p.NORMAL);
+    p.textStyle(p.BOLD);
     p.textSize(18);
     p.text("The daily stress-sleep link is more individual than universal", 20, 24);
 
