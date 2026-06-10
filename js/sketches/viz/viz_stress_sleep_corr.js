@@ -122,7 +122,7 @@ window.StressSleepCorrViz = (function () {
 
   function drawZoneLabels(p, alpha) {
     p.noStroke();
-    p.fill(COLOR_MUTED, alpha * 0.6);
+    p.fill(COLOR_TEXT, alpha * 0.8);
     p.textAlign(p.CENTER, p.BASELINE);
     p.textStyle(p.BOLD);
     p.textSize(9.5);
