@@ -87,6 +87,7 @@ window.StressSleepCorrViz = (function () {
     p.noStroke();
     p.textAlign(p.CENTER, p.BASELINE);
     p.textSize(14);
+    p.textStyle(p.BOLD);
 
     p.fill(...hexToRgb(COLOR_NEG), alpha);
     p.text("← Stress hurts sleep", 170, 74);
