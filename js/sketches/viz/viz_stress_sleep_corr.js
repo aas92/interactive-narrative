@@ -86,7 +86,7 @@ window.StressSleepCorrViz = (function () {
   function drawDirectionLabels(p, alpha) {
     p.noStroke();
     p.textAlign(p.CENTER, p.BASELINE);
-    p.textSize(11);
+    p.textSize(14);
 
     p.fill(...hexToRgb(COLOR_NEG), alpha);
     p.text("← Stress hurts sleep", 170, 74);
