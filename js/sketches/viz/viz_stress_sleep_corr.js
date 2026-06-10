@@ -42,11 +42,13 @@ window.StressSleepCorrViz = (function () {
 
     // Optional offset if the caller wants to position the chart somewhere
     // other than (0,0). Defaults to centered horizontally on the canvas.
-    const offsetX = (p.width - CHART_W) / 2;
-    const offsetY = 40;
+    const scale = Math.min(p.width / CHART_W, (p.height - 40) / CHART_H) * 0.95;
+    const offsetX = (p.width - CHART_W * scale) / 2;
+    const offsetY = Math.max(20, (p.height - CHART_H * scale) / 2);
 
     p.push();
     p.translate(offsetX, offsetY);
+    p.scale(scale);
 
     // Fade in based on scroll progress
     const alpha = p.constrain(progress * 255, 0, 255);
