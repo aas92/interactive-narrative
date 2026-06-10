@@ -78,7 +78,7 @@ window.StressSleepCorrViz = (function () {
     p.fill(COLOR_TEXT, alpha * 0.8);
     p.textSize(14);
     p.text(
-      "Each row is one of 34 students. Position shows the strength and direction of their daily stress-sleep correlation.",
+      "Each row is a student (n = 34). Position shows the strength and direction of their daily stress-sleep correlation.",
       20, 42
     );
   }
