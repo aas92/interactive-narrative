@@ -75,7 +75,7 @@ window.StressSleepCorrViz = (function () {
     p.textSize(18);
     p.text("The daily stress-sleep link is more individual than universal", 20, 24);
 
-    p.fill(COLOR_TEXT, alpha * 0.7);
+    p.fill(COLOR_TEXT, alpha * 0.8);
     p.textSize(14);
     p.text(
       "Each row is one of 34 students. Position shows the strength and direction of their daily stress-sleep correlation.",
@@ -89,10 +89,10 @@ window.StressSleepCorrViz = (function () {
     p.textSize(11);
 
     p.fill(...hexToRgb(COLOR_NEG), alpha);
-    p.text("← stress hurts sleep", 170, 74);
+    p.text("← Stress hurts sleep", 170, 74);
 
     p.fill(...hexToRgb(COLOR_POS), alpha);
-    p.text("stress and sleep rise together →", 510, 74);
+    p.text("Stress and sleep increase together →", 510, 74);
   }
 
   function drawAxis(p, alpha) {
